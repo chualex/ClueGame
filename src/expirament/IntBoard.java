@@ -68,7 +68,21 @@ public class IntBoard {
 	}
 	
 	public void calcTargets(BoardCell startCell, int pathLength) {
-
+		visited.clear();
+		visited.add(startCell);
+		for (BoardCell Cell: adjCells.get(startCell)) {
+			if (visited.contains(Cell)) {
+				continue;
+			}
+			visited.add(Cell);
+			if (pathLength == 1) {
+				targets.add(Cell);
+			}
+			else {
+				calcTargets(Cell, pathLength - 1);
+			}
+			visited.remove(Cell);
+		}
 	}
 	public BoardCell getCell(int row, int column) {
 		return grid[row][column];
