@@ -1,5 +1,7 @@
 package expirament;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -68,7 +70,6 @@ public class IntBoard {
 	}
 	
 	public void calcTargets(BoardCell startCell, int pathLength) {
-		visited.clear();
 		visited.add(startCell);
 		for (BoardCell Cell: adjCells.get(startCell)) {
 			if (visited.contains(Cell)) {
@@ -87,9 +88,38 @@ public class IntBoard {
 	public BoardCell getCell(int row, int column) {
 		return grid[row][column];
 	}
+	public void print() {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				System.out.print(grid[i][j].toString() + " ");
+				
+			}
+			System.out.println();
+		}
+	}
+	
+	public static void main(String[] args) {
+		IntBoard board = new IntBoard(4,4);
+		board.calcAdjacencies();
+		BoardCell cell = board.getCell(2, 2);
+		
+		board.calcTargets(cell, 2);
+		Set<BoardCell> targets = board.getTargets();
+		System.out.println();
+		for (BoardCell a : targets) {
+			System.out.println(a.toString());
+		}
+		BoardCell cell2 = board.getCell(2, 1);
+		board.calcTargets(cell2, 2);
+		Set<BoardCell> targets2 = board.getTargets();
+		System.out.println();
+		for (BoardCell b : targets2) {
+			System.out.println(b.toString());
+		}
+	}
+	
+	
 
-	
-	
 	
 	
 }
