@@ -245,7 +245,25 @@ public class Board {
 	}
 	
 	public void calcTargets(int a, int b, int pathLength) {
-		
+		targets.clear();
+		BoardCell startCell = getCellAt(a, b);
+		calcTargets(startCell, pathLength);
+	}
+	public void calcTargets(BoardCell startCell, int pathLength) {
+		visited.add(startCell);
+		for (BoardCell Cell: adjCells.get(startCell)) {
+			if (visited.contains(Cell)) {
+				continue;
+			}
+			visited.add(Cell);
+			if (pathLength == 1 || Cell.isDoorway() == true) {
+				targets.add(Cell);
+			}
+			else {
+				calcTargets(Cell, pathLength - 1);
+			}
+			visited.remove(Cell);
+		}
 	}
 	public static void main(String[] args) {
 		Board board = Board.getInstance();
@@ -253,7 +271,9 @@ public class Board {
 		board.setConfigFiles("CR_ClueLayout.csv", "CR_ClueLegend.txt");		
 		board.initialize();
 		board.calcAdjacencies();
-
+		board.calcTargets(21, 7, 1);
+		Set<BoardCell> targets= board.getTargets();
+		
 	}
 
 }

@@ -20,6 +20,7 @@ public class TargetsTest {
 			// set the file names to use my config files
 			board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt");		
 			board.initialize();
+			board.calcAdjacencies();
 		}
 		
 
@@ -54,19 +55,16 @@ public class TargetsTest {
 		{
 			// TEST DOORWAY RIGHT 
 			Set<BoardCell> testList = board.getAdjList(18, 17);
-			assertEquals(2, testList.size());
-			assertTrue(testList.contains(board.getCellAt(17, 17)));
+			assertEquals(1, testList.size());
 			assertTrue(testList.contains(board.getCellAt(18, 18)));
 			// TEST DOORWAY LEFT 
 			testList = board.getAdjList(4, 14);
-			assertEquals(2, testList.size());
-			assertTrue(testList.contains(board.getCellAt(5, 14)));
+			assertEquals(1, testList.size());
 			assertTrue(testList.contains(board.getCellAt(4, 13)));
 			//TEST DOORWAY DOWN
 			testList = board.getAdjList(5, 3);
-			assertEquals(2, testList.size());
+			assertEquals(1, testList.size());
 			assertTrue(testList.contains(board.getCellAt(6, 3)));
-			assertTrue(testList.contains(board.getCellAt(5, 4)));
 			//TEST DOORWAY UP
 			testList = board.getAdjList(18, 12);
 			assertEquals(1, testList.size());
