@@ -7,7 +7,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import expirament.BoardCell;
+import clueGame.BoardCell;
 import expirament.IntBoard;
 
 public class IntBoardTests {
