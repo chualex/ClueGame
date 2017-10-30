@@ -1,4 +1,12 @@
 package clueGame;
+/**
+ * BoardCell Class - class for a single cell of the board.
+ * 
+ * @author Alexander Chu
+ * @author Joseph O'Brien
+ * 
+ *
+ */
 
 public class BoardCell {
 	private int row;
@@ -18,30 +26,45 @@ public class BoardCell {
 		isDoorway = false;
 	}
 
-	public String toString() {
-		return "[" + row + ", " + column + "]";
-	}
-
+	
+	/**
+	 * Getter for if the cell is a doorway
+	 * @return true if the cell is a door otherwise false
+	 */
 	public boolean isDoorway() {
 		// TODO Auto-generated method stub
 		return isDoorway;
 	}
-
+/**
+ * Getter for DoorDirection
+ * 
+ * @return The direction of the door. 
+ */
 	public DoorDirection getDoorDirection() {
 		// TODO Auto-generated method stub
 		return this.doorDirection;
 	}
-
+	/**
+	 * Getter for the type of cell
+	 * 
+	 * @return The char representing the type of cell
+	 */
 	public char getInitial() {
 		// TODO Auto-generated method stub
 		return initial;
 	}
-	public Boolean getIsDoorway() {
-		return isDoorway;
-	}
+	/**
+	 * Setter for doorways
+	 * @param isDoorway true if the cell is a doorway
+	 */
 	public void setIsDoorway(Boolean isDoorway) {
 		this.isDoorway = isDoorway;
 	}
+	
+	/**
+	 * setter for the door direction
+	 * @param doorDirection The door direction for that cell. UP, DOWN, LEFT, RIGHT
+	 */
 	public void setDoorDirection(DoorDirection doorDirection) {
 		this.doorDirection = doorDirection;
 	}

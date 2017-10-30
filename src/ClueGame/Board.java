@@ -1,6 +1,4 @@
 package clueGame;
-
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -9,7 +7,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-
+/**
+ * Board Class - Sets up Board and finds adjacencies and targets.
+ * 
+ * @author Alexander Chu
+ * @author Joseph O'Brien
+ * 
+ *
+ */
 
 public class Board {
 	private BoardCell[][] gameBoard;
@@ -22,23 +27,27 @@ public class Board {
 	private static Board theInstance = new Board();
 	private String boardFile;
 	private String legendFile;
-	
+
 	public Board() {
 		legend = new HashMap<Character, String>();
 		adjCells = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		}
-/*
- * Sets the config file names
- */
+
+	/**
+	 * Sets the config file names
+	 * @param string The name of the Board file
+	 * @param string2 The name of the Legend file
+	 */
 	public void setConfigFiles(String string, String string2) {
 		boardFile = string;
 		legendFile = string2;
 	}
-/*
- * Initializes game board -- calls config functions
- */
+
+	/**
+	 * Calls config functions to read in the elemments of the game board and legend
+	 */
 	public void initialize() {
 		
 		try {
@@ -55,21 +64,30 @@ public class Board {
 			}
 		
 	}
-	/*
+
+	/**
 	 * Getter for legend
+	 * 
+	 * @return The map that contains the legend
 	 */
 
 	public Map<Character, String> getLegend() {
 		return legend;
 	}
-/*
- * Getter for numRows
- */
+
+	/**
+	 * Getter for numRows
+	 * 
+	 * @return Number of rows on game board
+	 */
 	public int getNumRows() {
 		return numRows;
 	}
-	/*
+
+	/**
 	 * Getter for numColumns
+	 * 
+	 * @return Number of columns on game board
 	 */
 	public int getNumColumns() {
 		return numColumns;
@@ -79,15 +97,23 @@ public class Board {
 		
 		return gameBoard[i][j];
 	}
-	/*
+
+	/**
 	 * Getter for the instance of the board
+	 * 
+	 * @return The instance of the game board
 	 */
 	public static Board getInstance() {
 		// TODO Auto-generated method stub
 		return theInstance;
 	}
 	/*
-	 * Loads in the legend from text file 
+	 * 
+	 */
+	/**
+	 * Loads in the legend from text file. Puts the elements in a map to represent the legend. 
+	 * 
+	 * @throws BadConfigFormatException If the format of the legend is not correct 
 	 */
 	public void loadRoomConfig() throws BadConfigFormatException {
 		//opens file
@@ -122,8 +148,12 @@ public class Board {
 		scan.close();
 		
 	}
-	/*
-	 * Loads in the game board and sets up the game board
+	
+	/**
+	 * Loads in the game board and sets up the game board. Creates an array of BoardCell the represents the game board. 
+	 * Determines if the cell is a door and defines the direction. 
+	 * 
+	 * @throws BadConfigFormatException If the board is not formated correctly
 	 */
 	public void loadBoardConfig() throws BadConfigFormatException {
 		// opens file
@@ -190,20 +220,34 @@ public class Board {
        
         
 	}
-	/*
-	 * Gets adjacent cell
+
+	
+	/**
+	 * Getter for adjacent cells 
+	 *  
+	 * @param a Row number
+	 * @param b Column number
+	 * @return all adjacent cells for a given cell
 	 */
 	public Set<BoardCell> getAdjList(int a, int b){
 		return adjCells.get(gameBoard[a][b]);
 	}
 	/*
+	 *
+	 */
+	/**
 	 * Getter for targets
+	 * @return the cells that the can be moved to. 
 	 */
 	public Set<BoardCell> getTargets(){
 		return targets;
 	}
 	/*
 	 * Calculates adjacencies
+	 */
+	/**
+	 * Calculates the adjacencies for the whole game board. Recognizes the cannot move within room, Only move in one direction from door,
+	 *  and can only enter rooms through a door. 
 	 */
 	public void calcAdjacencies() {
 		for (int i = 0; i < numRows; i++) {
@@ -243,12 +287,24 @@ public class Board {
 			}
 		}
 	}
-	
+	/**
+	 * Calls calcTargets for a certain location on the game board.
+	 * 
+	 * @param a row number
+	 * @param b column number 
+	 * @param pathLength number of steps
+	 */
 	public void calcTargets(int a, int b, int pathLength) {
 		targets.clear();
 		BoardCell startCell = getCellAt(a, b);
 		calcTargets(startCell, pathLength);
 	}
+	/**
+	 * Calculates all targets for a given cell and certain distance. 
+	 * 
+	 * @param startCell starting position
+	 * @param pathLength number of steps
+	 */
 	public void calcTargets(BoardCell startCell, int pathLength) {
 		visited.add(startCell);
 		for (BoardCell Cell: adjCells.get(startCell)) {
@@ -265,15 +321,6 @@ public class Board {
 			visited.remove(Cell);
 		}
 	}
-	public static void main(String[] args) {
-		Board board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("CR_ClueLayout.csv", "CR_ClueLegend.txt");		
-		board.initialize();
-		board.calcAdjacencies();
-		board.calcTargets(21, 7, 1);
-		Set<BoardCell> targets= board.getTargets();
-		
-	}
+
 
 }
