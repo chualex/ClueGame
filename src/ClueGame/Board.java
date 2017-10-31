@@ -53,16 +53,13 @@ public class Board {
 		try {
 			loadRoomConfig();
 		} catch (BadConfigFormatException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
 		try {
 			loadBoardConfig();
 		} catch (BadConfigFormatException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			}
-		
 	}
 
 	/**
@@ -94,7 +91,6 @@ public class Board {
 	}
 
 	public BoardCell getCellAt(int i, int j) {
-		
 		return gameBoard[i][j];
 	}
 
@@ -107,9 +103,7 @@ public class Board {
 		// TODO Auto-generated method stub
 		return theInstance;
 	}
-	/*
-	 * 
-	 */
+
 	/**
 	 * Loads in the legend from text file. Puts the elements in a map to represent the legend. 
 	 * 
@@ -123,7 +117,6 @@ public class Board {
 			iFS = new FileReader(legendFile);
 			scan = new Scanner(iFS);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//reads in the lines of the file
@@ -167,7 +160,6 @@ public class Board {
 				input.add(scan.nextLine());
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//set rows
@@ -232,9 +224,7 @@ public class Board {
 	public Set<BoardCell> getAdjList(int a, int b){
 		return adjCells.get(gameBoard[a][b]);
 	}
-	/*
-	 *
-	 */
+
 	/**
 	 * Getter for targets
 	 * @return the cells that the can be moved to. 
@@ -242,9 +232,7 @@ public class Board {
 	public Set<BoardCell> getTargets(){
 		return targets;
 	}
-	/*
-	 * Calculates adjacencies
-	 */
+
 	/**
 	 * Calculates the adjacencies for the whole game board. Recognizes the cannot move within room, Only move in one direction from door,
 	 *  and can only enter rooms through a door. 
@@ -287,6 +275,7 @@ public class Board {
 			}
 		}
 	}
+	
 	/**
 	 * Calls calcTargets for a certain location on the game board.
 	 * 
@@ -299,6 +288,7 @@ public class Board {
 		BoardCell startCell = getCellAt(a, b);
 		calcTargets(startCell, pathLength);
 	}
+	
 	/**
 	 * Calculates all targets for a given cell and certain distance. 
 	 * 
