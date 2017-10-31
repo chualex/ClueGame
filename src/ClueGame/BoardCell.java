@@ -38,7 +38,6 @@ public class BoardCell {
 	 * @return true if the cell is a door otherwise false
 	 */
 	public boolean isDoorway() {
-		// TODO Auto-generated method stub
 		return isDoorway;
 	}
 	/**
@@ -47,7 +46,6 @@ public class BoardCell {
 	 * @return The direction of the door. 
 	 */
 	public DoorDirection getDoorDirection() {
-		// TODO Auto-generated method stub
 		return this.doorDirection;
 	}
 
@@ -76,7 +74,4 @@ public class BoardCell {
 	public void setDoorDirection(DoorDirection doorDirection) {
 		this.doorDirection = doorDirection;
 	}
-
-
-
 }
