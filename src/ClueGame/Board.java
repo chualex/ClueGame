@@ -296,7 +296,7 @@ public class Board {
 	public void calcTargets(int a, int b, int pathLength) {
 		targets.clear();
 		BoardCell startCell = getCellAt(a, b);
-		calcTargets(startCell, pathLength);
+		findAllTargets(startCell, pathLength);
 	}
 	
 	/**
@@ -305,7 +305,7 @@ public class Board {
 	 * @param startCell starting position
 	 * @param pathLength number of steps
 	 */
-	public void calcTargets(BoardCell startCell, int pathLength) {
+	public void findAllTargets(BoardCell startCell, int pathLength) {
 		visited.add(startCell);
 		for (BoardCell Cell: adjCells.get(startCell)) {
 			if (visited.contains(Cell)) {
@@ -316,7 +316,7 @@ public class Board {
 				targets.add(Cell);
 			}
 			else {
-				calcTargets(Cell, pathLength - 1);
+				findAllTargets(Cell, pathLength - 1);
 			}
 			visited.remove(Cell);
 		}
