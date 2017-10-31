@@ -60,6 +60,7 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 			}
+		calcAdjacencies();
 	}
 
 	/**
