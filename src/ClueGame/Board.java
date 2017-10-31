@@ -42,7 +42,7 @@ public class Board {
 		adjCells = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
-		}
+	}
 
 	/**
 	 * Sets the config file names
@@ -58,7 +58,7 @@ public class Board {
 	 * Calls config functions to read in the elemments of the game board and legend
 	 */
 	public void initialize() {
-		
+
 		try {
 			loadRoomConfig();
 		} catch (BadConfigFormatException e) {
@@ -68,7 +68,7 @@ public class Board {
 			loadBoardConfig();
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
-			}
+		}
 		calcAdjacencies();
 	}
 
@@ -144,14 +144,14 @@ public class Board {
 					throw new BadConfigFormatException("Type set Error: " + split[1] + " " + split[2]);
 				}
 			}
-			
+
 			// puts legend together
 			legend.put(split[0].charAt(0), split[1]);
 		}
 		scan.close();
-		
+
 	}
-	
+
 	/**
 	 * Loads in the game board and sets up the game board. Creates an array of BoardCell the represents the game board. 
 	 * Determines if the cell is a door and defines the direction. 
@@ -219,11 +219,11 @@ public class Board {
 				}
 			}
 		}
-       
-        
+
+
 	}
 
-	
+
 	/**
 	 * Getter for adjacent cells 
 	 *  
@@ -285,7 +285,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	/**
 	 * Calls calcTargets for a certain location on the game board.
 	 * 
@@ -298,7 +298,7 @@ public class Board {
 		BoardCell startCell = getCellAt(a, b);
 		findAllTargets(startCell, pathLength);
 	}
-	
+
 	/**
 	 * Calculates all targets for a given cell and certain distance. 
 	 * 
