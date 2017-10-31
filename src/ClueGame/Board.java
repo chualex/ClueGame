@@ -17,17 +17,26 @@ import java.util.Set;
  */
 
 public class Board {
+	// Array to store the game board
 	private BoardCell[][] gameBoard;
+	// Number of rows in game board
 	private int numRows;
+	// Number of columns in game board
 	private int numColumns;
+	// Map to store the legend
 	private Map<Character, String> legend;
+	// Map to store all adjacent cells
 	private Map<BoardCell, Set<BoardCell>> adjCells;
+	// set to store visited cells 
 	private Set<BoardCell> visited;
+	// set to store targets
 	private Set<BoardCell> targets;
+	// Creates only instance of the board
 	private static Board theInstance = new Board();
+	// Board input file
 	private String boardFile;
+	// Legend input file name
 	private String legendFile;
-
 	public Board() {
 		legend = new HashMap<Character, String>();
 		adjCells = new HashMap<BoardCell, Set<BoardCell>>();
