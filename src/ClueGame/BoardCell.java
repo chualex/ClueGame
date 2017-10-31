@@ -9,16 +9,23 @@ package clueGame;
  */
 
 public class BoardCell {
+	// Row position in game board
 	private int row;
+	// Column position in game board
 	private int column;
+	// Letter identifier
 	private char initial;
+	// Bool for if the cell is a doorway
 	private Boolean isDoorway;
+	// Door direction
 	private DoorDirection doorDirection;
+
 	public BoardCell(int i, int j) {
 		this.row = i;
 		this.column = j;
 		isDoorway = false;
 	}
+
 	public BoardCell(int i, int j, char a) {
 		this.row = i;
 		this.column = j;
@@ -26,7 +33,6 @@ public class BoardCell {
 		isDoorway = false;
 	}
 
-	
 	/**
 	 * Getter for if the cell is a doorway
 	 * @return true if the cell is a door otherwise false
@@ -35,15 +41,16 @@ public class BoardCell {
 		// TODO Auto-generated method stub
 		return isDoorway;
 	}
-/**
- * Getter for DoorDirection
- * 
- * @return The direction of the door. 
- */
+	/**
+	 * Getter for DoorDirection
+	 * 
+	 * @return The direction of the door. 
+	 */
 	public DoorDirection getDoorDirection() {
 		// TODO Auto-generated method stub
 		return this.doorDirection;
 	}
+
 	/**
 	 * Getter for the type of cell
 	 * 
@@ -53,6 +60,7 @@ public class BoardCell {
 		// TODO Auto-generated method stub
 		return initial;
 	}
+
 	/**
 	 * Setter for doorways
 	 * @param isDoorway true if the cell is a doorway
@@ -60,7 +68,7 @@ public class BoardCell {
 	public void setIsDoorway(Boolean isDoorway) {
 		this.isDoorway = isDoorway;
 	}
-	
+
 	/**
 	 * setter for the door direction
 	 * @param doorDirection The door direction for that cell. UP, DOWN, LEFT, RIGHT
@@ -68,7 +76,7 @@ public class BoardCell {
 	public void setDoorDirection(DoorDirection doorDirection) {
 		this.doorDirection = doorDirection;
 	}
-	
-	
-	
+
+
+
 }
