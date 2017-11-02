@@ -107,10 +107,11 @@ public class gameSetUpTests {
 			}
 		}
 		for (int i = 0; i < testArr.length; i++) {
-			
+			assertTrue(testArr[i]);
 		}
-		
+		Card tempDeck[] = board.getDeck();
+		assertEquals(0, tempDeck.length);
 	}
 	
-
+	
 }
