@@ -94,5 +94,23 @@ public class gameSetUpTests {
 		assertTrue(containsPlayer);
 		assertTrue(containsWeapon);
 	}
+	
+	@Test
+	public void testDealCards() {
+		board.dealCards();
+		boolean testArr[] = new boolean[NUM_PLAYERS];
+		Player playerArr[] = board.getPlayers();
+		for (int i = 0; i < playerArr.length; i++) {
+			Card tempArr[] = playerArr.getCards();
+			if (tempArr > 2) {
+				testArr[i] = true;
+			}
+		}
+		for (int i = 0; i < testArr.length; i++) {
+			
+		}
+		
+	}
+	
 
 }
