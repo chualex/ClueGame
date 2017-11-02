@@ -19,8 +19,8 @@ public class gameSetUpTests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt");		
-		// Initialize will load BOTH config files 
+		board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt", "PlayerFile.txt", "WeaponsFile.txt");
+		// Initialize will load BOTH config files
 		board.initialize();
 	}
 	
