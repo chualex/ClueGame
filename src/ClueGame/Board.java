@@ -37,11 +37,22 @@ public class Board {
 	private String boardFile;
 	// Legend input file name
 	private String legendFile;
+	// Player input file name
+	private String playerFile;
+	// Weapons file name
+	private String weaponsFile;
+	// Array for players
+	private Player players[];
+	// Array for deck
+	private Card deck[];
+	
 	public Board() {
 		legend = new HashMap<Character, String>();
 		adjCells = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
+		players = new Player[1];
+		deck = new Card[1];
 	}
 
 	/**
@@ -53,7 +64,21 @@ public class Board {
 		boardFile = string;
 		legendFile = string2;
 	}
-
+	/**
+	 * 
+	 * @param string
+	 * @param string2
+	 * @param string3
+	 * @param string4
+	 */
+	public void setConfigFiles(String string, String string2, String string3, String string4) {
+		boardFile = string;
+		legendFile = string2;
+		playerFile = string3;
+		weaponsFile = string4;
+		
+	}
+	
 	/**
 	 * Calls config functions to read in the elemments of the game board and legend
 	 */
@@ -321,6 +346,21 @@ public class Board {
 			visited.remove(Cell);
 		}
 	}
+
+	public Player[] getPlayers() {
+		return players;
+	}
+
+	public Card[] getDeck() {
+		return deck;
+	}
+
+	public void dealCards() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 
 

@@ -3,12 +3,15 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
 import clueGame.BoardCell;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.Player;
 
 public class gameSetUpTests {
@@ -38,28 +41,28 @@ public class gameSetUpTests {
 		assertEquals(NUM_PLAYERS, testArr.length);
 		
 		//Test First player
-		assertEquals("Madame Young Jon", testArr[0].getName());
+		assertEquals("Madame Young Jon", testArr[0].getPlayerName());
 		assertTrue(testArr[0].isHuman());
 		assertEquals(Color.pink, testArr[0].getColor());
 		assertEquals(13, testArr[0].getRow());
 		assertEquals(18, testArr[0].getColumn());
 
 		//Test Second Player
-		assertEquals("Mrs. Gehrig White", testArr[1].getName());
+		assertEquals("Mrs. Gehrig White", testArr[1].getPlayerName());
 		assertFalse(testArr[1].isHuman());
 		assertEquals(Color.white, testArr[1].getColor());
 		assertEquals(16, testArr[1].getRow());
 		assertEquals(21, testArr[1].getColumn());
 		
 		//Test 4th Player
-		assertEquals("Ms. Scarlet", testArr[3].getName());
+		assertEquals("Ms. Scarlet", testArr[3].getPlayerName());
 		assertFalse(testArr[3].isHuman());
 		assertEquals(Color.red, testArr[3].getColor());
 		assertEquals(12, testArr[3].getRow());
 		assertEquals(6, testArr[3].getColumn());
 	
 		//Test Last Player
-		assertEquals("Sargent George", testArr[5].getName());
+		assertEquals("Sargent George", testArr[5].getPlayerName());
 		assertFalse(testArr[5].isHuman());
 		assertEquals(Color.orange, testArr[5].getColor());
 		assertEquals(5, testArr[5].getRow());
@@ -70,28 +73,30 @@ public class gameSetUpTests {
 	public void testLoadCards() {
 		Card testDeck[] = board.getDeck();
 		assertEquals(DECK_SIZE, testDeck.length);
-		int numRooms;
-		int numWeapons;
-		int numPlayers;
-		boolean containsPlayer, containsWeapon, containsRoom = false;
+		int numRooms = 0;
+		int numWeapons = 0;
+		int numPlayers = 0;
+		boolean containsPlayer = false;
+		boolean containsWeapon = false;
+		boolean containsRoom = false;
 		
 		for (int i =  0; i < testDeck.length; i++) {
-			if (testDeck[i].getType() == CardType.PERSON) {
+			if (testDeck[i].getCardType() == CardType.PERSON) {
 				numPlayers++;
 			}
-			if (testDeck[i].getType() == CardType.WEAPON) {
+			if (testDeck[i].getCardType() == CardType.WEAPON) {
 				numWeapons++;
 			}
-			if (testDeck[i].getType() == CardType.ROOM) {
+			if (testDeck[i].getCardType() == CardType.ROOM) {
 				numRooms++;
 			}
-			if (testDeck[i].getName() == "Sargent George") {
+			if (testDeck[i].getCardName() == "Sargent George") {
 				containsPlayer = true;
 			}
-			if (testDeck[i].getName() == "Candlestick") {
+			if (testDeck[i].getCardName() == "Candlestick") {
 				containsWeapon = true;
 			}
-			if (testDeck[i].getName() == "Kitchen") {
+			if (testDeck[i].getCardName() == "Kitchen") {
 				containsRoom = true;
 			}
 		}
@@ -109,22 +114,25 @@ public class gameSetUpTests {
 		board.dealCards();
 		boolean testArr[] = new boolean[NUM_PLAYERS];
 		Player playerArr[] = board.getPlayers();
-		int numPantry, numScarlet, numPistol = 0;
+		int numPantry = 0;
+		int numScarlet = 0;
+		int numPistol = 0;
+		
 		//test that everyone has enough cards
 		for (int i = 0; i < playerArr.length; i++) {
-			Card tempArr[] = playerArr.getCards();
-			if (tempArr > 2) {
+			ArrayList<Card> tempArr = playerArr[i].getMyCards();
+			if (tempArr.size() > 2) {
 				testArr[i] = true;
 			}
 			//Test that card only shows up once
-			for (int j = 0; j < tempArr.length; j++) {
-				if (tempArr[j].getName.equalsIgnoresCase("Ms. Scarlet")) {
+			for (int j = 0; j < tempArr.size(); j++) {
+				if (tempArr.get(j).getCardName().equalsIgnoreCase("Ms. Scarlet")) {
 					numScarlet++;
 				}
-				if (tempArr[j].getName.equalsIgnoresCase("Pistol")) {
+				if (tempArr.get(j).getCardName().equalsIgnoreCase("Pistol")) {
 					numPistol++;
 				}
-				if (tempArr[j].getName.equalsIgnoresCase("Pantry")) {
+				if (tempArr.get(j).getCardName().equalsIgnoreCase("Pantry")) {
 					numPantry++;
 				}
 			}
