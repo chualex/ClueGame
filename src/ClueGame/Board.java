@@ -1,5 +1,7 @@
 package clueGame;
 import java.io.FileNotFoundException;
+import java.awt.Color;
+import java.lang.reflect.Field;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,15 +45,18 @@ public class Board {
 	private String weaponsFile;
 	// Array for players
 	private Player players[];
+	// Number of players
+	private int numPlayers;
 	// Array for deck
 	private Card deck[];
+	// Number of cards
+	private int numCards;
 	
 	public Board() {
 		legend = new HashMap<Character, String>();
 		adjCells = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
-		players = new Player[1];
 		deck = new Card[1];
 	}
 
@@ -94,8 +99,11 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
+		loadPlayerConfig();
 		calcAdjacencies();
 	}
+
+
 
 	/**
 	 * Getter for legend
@@ -247,8 +255,74 @@ public class Board {
 
 
 	}
+	/**
+	 * 
+	 */
 
-
+	private void loadPlayerConfig() {
+		FileReader iFS;
+		ArrayList<String> input = new ArrayList<String>();
+		try {
+			iFS = new FileReader(playerFile);
+			Scanner scan = new Scanner(iFS);
+			// read in rows
+			while (scan.hasNextLine()) {
+				input.add(scan.nextLine());
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		// Allocate player array
+		numPlayers = input.size();
+		players = new Player[numPlayers];
+		
+		// Fill player array
+		for (int i = 0; i < input.size(); i++) {
+			String[] split = input.get(i).split(", ");
+			String playerName = split[0];
+			Color color = convertColor(split[1]);
+			boolean isHuman = false;
+			if (split[2].equalsIgnoreCase("Player")) {
+				isHuman = true;
+			}
+			int row = intConverter(split[3]);
+			int column = intConverter(split[4]);;
+			players[i] = new Player(playerName, row, column, color, isHuman);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param strInt
+	 * @return
+	 */
+	public int intConverter(String strInt) {
+		int output;
+		try {
+			output = Integer.parseInt(strInt);
+		} catch (NumberFormatException e) {
+			output = 0;
+		}
+		return output;
+		
+	}
+	/**
+	 * from http://stackoverflow.com/questions/2854043/converting-a-string-to-color-in-java
+	 * @param strColor
+	 * @return
+	 */
+	public Color convertColor(String strColor) {
+		Color color;
+		try {
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
+			color = (Color)field.get(null);
+		} catch (Exception e) {
+			color = null; // Not defined
+		}
+		return color;
+	}
+	
 	/**
 	 * Getter for adjacent cells 
 	 *  
