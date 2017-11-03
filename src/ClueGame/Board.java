@@ -67,6 +67,9 @@ public class Board {
 	public void setConfigFiles(String string, String string2) {
 		boardFile = string;
 		legendFile = string2;
+		playerFile = "PlayerFile.txt";
+		weaponsFile = "WeaponsFile.txt";
+		
 	}
 	/**
 	 * 

@@ -30,7 +30,6 @@ public class gameSetUpTests {
 		board = Board.getInstance();
 		// set the file names to use my config files
 		board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt", "PlayerFile.txt", "WeaponsFile.txt");
-		// Initialize will load BOTH config files
 		
 	}
 	
@@ -73,6 +72,7 @@ public class gameSetUpTests {
 	
 	@Test
 	public void testLoadCards() {
+		// Initialize Test
 		try {
 			board.loadRoomConfig();
 		} catch (BadConfigFormatException e1) {
@@ -87,6 +87,8 @@ public class gameSetUpTests {
 		}
 		board.loadPlayerConfig();
 		board.loadWeaponConfig();
+		
+		
 		ArrayList<Card> testDeck = board.getDeck();
 		assertEquals(DECK_SIZE, testDeck.size());
 		int numRooms = 0;
@@ -95,7 +97,7 @@ public class gameSetUpTests {
 		boolean containsPlayer = false;
 		boolean containsWeapon = false;
 		boolean containsRoom = false;
-		
+		// Test number of rooms, weapons, and players dealt
 		for (int i =  0; i < testDeck.size(); i++) {
 			if (testDeck.get(i).getCardType() == CardType.PERSON) {
 				numPlayers++;
@@ -116,6 +118,7 @@ public class gameSetUpTests {
 				containsRoom = true;
 			}
 		}
+		
 		
 		assertEquals(NUM_ROOMS, numRooms);
 		assertEquals(NUM_WEAPONS, numWeapons);
