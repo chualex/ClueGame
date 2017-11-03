@@ -109,17 +109,35 @@ public class gameSetUpTests {
 		board.dealCards();
 		boolean testArr[] = new boolean[NUM_PLAYERS];
 		Player playerArr[] = board.getPlayers();
+		int numPantry, numScarlet, numPistol = 0;
+		//test that everyone has enough cards
 		for (int i = 0; i < playerArr.length; i++) {
 			Card tempArr[] = playerArr.getCards();
 			if (tempArr > 2) {
 				testArr[i] = true;
 			}
+			//Test that card only shows up once
+			for (int j = 0; j < tempArr.length; j++) {
+				if (tempArr[j].getName.equalsIgnoresCase("Ms. Scarlet")) {
+					numScarlet++;
+				}
+				if (tempArr[j].getName.equalsIgnoresCase("Pistol")) {
+					numPistol++;
+				}
+				if (tempArr[j].getName.equalsIgnoresCase("Pantry")) {
+					numPantry++;
+				}
+			}
+			
 		}
 		for (int i = 0; i < testArr.length; i++) {
 			assertTrue(testArr[i]);
 		}
 		Card tempDeck[] = board.getDeck();
 		assertEquals(0, tempDeck.length);
+		assertEquals(1, numPantry);
+		assertEquals(1, numScarlet);
+		assertEquals(1, numPistol);
 	}
 	
 	
