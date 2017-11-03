@@ -90,13 +90,13 @@ public class gameSetUpTests {
 			if (testDeck.get(i).getCardType() == CardType.ROOM) {
 				numRooms++;
 			}
-			if (testDeck.get(i).getCardName() == "Sargent George") {
+			if (testDeck.get(i).getCardName().equalsIgnoreCase("Sargent George")) {
 				containsPlayer = true;
 			}
-			if (testDeck.get(i).getCardName() == "Candlestick") {
+			if (testDeck.get(i).getCardName().equalsIgnoreCase("Candlestick")) {
 				containsWeapon = true;
 			}
-			if (testDeck.get(i).getCardName() == "Kitchen") {
+			if (testDeck.get(i).getCardName().equalsIgnoreCase("Kitchen")) {
 				containsRoom = true;
 			}
 		}
@@ -111,7 +111,6 @@ public class gameSetUpTests {
 	
 	@Test
 	public void testDealCards() {
-		board.dealCards();
 		boolean testArr[] = new boolean[NUM_PLAYERS];
 		Player playerArr[] = board.getPlayers();
 		int numPantry = 0;

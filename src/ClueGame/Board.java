@@ -98,6 +98,7 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 		loadPlayerConfig();
+		loadWeaponConfig();
 		calcAdjacencies();
 	}
 
@@ -175,14 +176,17 @@ public class Board {
 					throw new BadConfigFormatException("Type set Error: " + split[1] + " " + split[2]);
 				}
 			}
-			if (split[2])
+			if (split[2].equalsIgnoreCase("Card")) {
+				Card room = new Card(split[1], CardType.ROOM);
+				deck.add(room);
+			}
 			// puts legend together
 			legend.put(split[0].charAt(0), split[1]);
 		}
 		scan.close();
 
 	}
-
+	
 	/**
 	 * Loads in the game board and sets up the game board. Creates an array of BoardCell the represents the game board. 
 	 * Determines if the cell is a door and defines the direction. 
@@ -286,7 +290,26 @@ public class Board {
 			int row = intConverter(split[3]);
 			int column = intConverter(split[4]);;
 			players[i] = new Player(playerName, row, column, color, isHuman);
+			Card player = new Card(split[0], CardType.PERSON);
+			deck.add(player);
 		}
+	}
+	
+	public void loadWeaponConfig() {
+		FileReader iFS;
+		try {
+			iFS = new FileReader(weaponsFile);
+			Scanner scan = new Scanner(iFS);
+			// read in rows
+			while (scan.hasNextLine()) {
+				Card weapon = new Card(scan.nextLine(), CardType.WEAPON);
+				deck.add(weapon);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		int a = 0;
+		a = 2;
 	}
 	
 	/**
