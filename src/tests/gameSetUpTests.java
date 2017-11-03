@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.BoardCell;
 import clueGame.Player;
 
 public class gameSetUpTests {
@@ -40,21 +41,29 @@ public class gameSetUpTests {
 		assertEquals("Madame Young Jon", testArr[0].getName());
 		assertTrue(testArr[0].isHuman());
 		assertEquals(Color.pink, testArr[0].getColor());
-		
+		assertEquals(13, testArr[0].getRow());
+		assertEquals(18, testArr[0].getColumn());
+
 		//Test Second Player
 		assertEquals("Mrs. Gehrig White", testArr[1].getName());
 		assertFalse(testArr[1].isHuman());
 		assertEquals(Color.white, testArr[1].getColor());
+		assertEquals(16, testArr[1].getRow());
+		assertEquals(21, testArr[1].getColumn());
 		
 		//Test 4th Player
 		assertEquals("Ms. Scarlet", testArr[3].getName());
 		assertFalse(testArr[3].isHuman());
 		assertEquals(Color.red, testArr[3].getColor());
-		
+		assertEquals(12, testArr[3].getRow());
+		assertEquals(6, testArr[3].getColumn());
+	
 		//Test Last Player
 		assertEquals("Sargent George", testArr[5].getName());
 		assertFalse(testArr[5].isHuman());
 		assertEquals(Color.orange, testArr[5].getColor());
+		assertEquals(5, testArr[5].getRow());
+		assertEquals(10, testArr[5].getColumn());
 	}
 	
 	@Test
@@ -66,23 +75,23 @@ public class gameSetUpTests {
 		int numPlayers;
 		boolean containsPlayer, containsWeapon, containsRoom = false;
 		
-		for (int i =  0; i < testArr.length; i++) {
-			if (testArr[i].getType() == CardType.PERSON) {
+		for (int i =  0; i < testDeck.length; i++) {
+			if (testDeck[i].getType() == CardType.PERSON) {
 				numPlayers++;
 			}
-			if (testArr[i].getType() == CardType.WEAPON) {
+			if (testDeck[i].getType() == CardType.WEAPON) {
 				numWeapons++;
 			}
-			if (testArr[i].getType() == CardType.ROOM) {
+			if (testDeck[i].getType() == CardType.ROOM) {
 				numRooms++;
 			}
-			if (testArr[i].getName == "Sargent George") {
+			if (testDeck[i].getName() == "Sargent George") {
 				containsPlayer = true;
 			}
-			if (testArr[i].getName == "Candlestick") {
+			if (testDeck[i].getName() == "Candlestick") {
 				containsWeapon = true;
 			}
-			if (testArr[i].getName == "Kitchen") {
+			if (testDeck[i].getName() == "Kitchen") {
 				containsRoom = true;
 			}
 		}

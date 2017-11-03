@@ -1,8 +1,8 @@
-Madame Young Jon, pink, Player
-Mrs. Gehrig White, white, Computer
-Professor Swanson, green, Computer
-Ms. Scarlet, red, Computer
-Colonel Mustard, yellow, Computer
-Sargent George, orange, Computer
+Madame Young Jon, pink, Player, 13, 18
+Mrs. Gehrig White, white, Computer, 16, 21
+Professor Swanson, green, Computer, 16, 12
+Ms. Scarlet, red, Computer, 12, 6
+Colonel Mustard, yellow, Computer, 6, 1
+Sargent George, orange, Computer, 5, 10
  
 
