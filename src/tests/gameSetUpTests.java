@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.Card;
@@ -30,13 +31,14 @@ public class gameSetUpTests {
 		// set the file names to use my config files
 		board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt", "PlayerFile.txt", "WeaponsFile.txt");
 		// Initialize will load BOTH config files
-		board.initialize();
+		
 	}
 	
 	
 	
 	@Test
 	public void testLoadPlayers() {
+		board.initialize();
 		Player testArr[] = board.getPlayers();
 		assertEquals(NUM_PLAYERS, testArr.length);
 		
@@ -71,6 +73,20 @@ public class gameSetUpTests {
 	
 	@Test
 	public void testLoadCards() {
+		try {
+			board.loadRoomConfig();
+		} catch (BadConfigFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			board.loadBoardConfig();
+		} catch (BadConfigFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		board.loadPlayerConfig();
+		board.loadWeaponConfig();
 		ArrayList<Card> testDeck = board.getDeck();
 		assertEquals(DECK_SIZE, testDeck.size());
 		int numRooms = 0;
@@ -111,6 +127,7 @@ public class gameSetUpTests {
 	
 	@Test
 	public void testDealCards() {
+		board.initialize();
 		boolean testArr[] = new boolean[NUM_PLAYERS];
 		Player playerArr[] = board.getPlayers();
 		int numPantry = 0;

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 /**
@@ -100,6 +101,7 @@ public class Board {
 		loadPlayerConfig();
 		loadWeaponConfig();
 		calcAdjacencies();
+		dealCards();
 	}
 
 
@@ -261,7 +263,7 @@ public class Board {
 	 * 
 	 */
 
-	private void loadPlayerConfig() {
+	public void loadPlayerConfig() {
 		FileReader iFS;
 		ArrayList<String> input = new ArrayList<String>();
 		try {
@@ -308,8 +310,6 @@ public class Board {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		int a = 0;
-		a = 2;
 	}
 	
 	/**
@@ -451,7 +451,24 @@ public class Board {
 	}
 
 	public void dealCards() {
-		// TODO Auto-generated method stub
+		
+		int size = deck.size();
+		int count = 0;
+		while (!deck.isEmpty()) {
+			Random rand = new Random();
+			int nextNum = rand.nextInt(deck.size());
+			if (count < numPlayers) {
+			ArrayList<Card> cards = new ArrayList<Card>();
+			cards = players[count].getMyCards();
+			cards.add(deck.get(nextNum));
+			players[count].setMyCards(cards);
+			deck.remove(nextNum);
+			count++;
+			}
+			else {
+				count = 0;
+			}
+		}
 		
 	}
 
