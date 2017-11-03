@@ -48,16 +48,14 @@ public class Board {
 	// Number of players
 	private int numPlayers;
 	// Array for deck
-	private Card deck[];
-	// Number of cards
-	private int numCards;
-	
+	private ArrayList<Card> deck;
+
 	public Board() {
 		legend = new HashMap<Character, String>();
 		adjCells = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
-		deck = new Card[1];
+		deck = new ArrayList<Card>();
 	}
 
 	/**
@@ -177,7 +175,7 @@ public class Board {
 					throw new BadConfigFormatException("Type set Error: " + split[1] + " " + split[2]);
 				}
 			}
-
+			if (split[2])
 			// puts legend together
 			legend.put(split[0].charAt(0), split[1]);
 		}
@@ -425,7 +423,7 @@ public class Board {
 		return players;
 	}
 
-	public Card[] getDeck() {
+	public ArrayList<Card> getDeck() {
 		return deck;
 	}
 

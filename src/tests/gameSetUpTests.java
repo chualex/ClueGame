@@ -71,8 +71,8 @@ public class gameSetUpTests {
 	
 	@Test
 	public void testLoadCards() {
-		Card testDeck[] = board.getDeck();
-		assertEquals(DECK_SIZE, testDeck.length);
+		ArrayList<Card> testDeck = board.getDeck();
+		assertEquals(DECK_SIZE, testDeck.size());
 		int numRooms = 0;
 		int numWeapons = 0;
 		int numPlayers = 0;
@@ -80,23 +80,23 @@ public class gameSetUpTests {
 		boolean containsWeapon = false;
 		boolean containsRoom = false;
 		
-		for (int i =  0; i < testDeck.length; i++) {
-			if (testDeck[i].getCardType() == CardType.PERSON) {
+		for (int i =  0; i < testDeck.size(); i++) {
+			if (testDeck.get(i).getCardType() == CardType.PERSON) {
 				numPlayers++;
 			}
-			if (testDeck[i].getCardType() == CardType.WEAPON) {
+			if (testDeck.get(i).getCardType() == CardType.WEAPON) {
 				numWeapons++;
 			}
-			if (testDeck[i].getCardType() == CardType.ROOM) {
+			if (testDeck.get(i).getCardType() == CardType.ROOM) {
 				numRooms++;
 			}
-			if (testDeck[i].getCardName() == "Sargent George") {
+			if (testDeck.get(i).getCardName() == "Sargent George") {
 				containsPlayer = true;
 			}
-			if (testDeck[i].getCardName() == "Candlestick") {
+			if (testDeck.get(i).getCardName() == "Candlestick") {
 				containsWeapon = true;
 			}
-			if (testDeck[i].getCardName() == "Kitchen") {
+			if (testDeck.get(i).getCardName() == "Kitchen") {
 				containsRoom = true;
 			}
 		}
@@ -141,8 +141,7 @@ public class gameSetUpTests {
 		for (int i = 0; i < testArr.length; i++) {
 			assertTrue(testArr[i]);
 		}
-		Card tempDeck[] = board.getDeck();
-		assertEquals(0, tempDeck.length);
+
 		assertEquals(1, numPantry);
 		assertEquals(1, numScarlet);
 		assertEquals(1, numPistol);
