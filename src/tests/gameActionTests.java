@@ -74,7 +74,20 @@ public class gameActionTests {
 
 	@Test
 	public void testAccusation(){
-		
+		Solution solution = new Solution("Miss Scarlet", "Wrench", "Kitchen"); 
+		Solution correct = new Solution("Miss Scarlet", "Wrench", "Kitchen");
+		Solution badPerson = new Solution("Professor Swanson", "Wrench", "Kitchen");
+		Solution badWeapon = new Solution("Miss Scarlet", "Knife", "Kitchen");
+		Solution badRoom = new Solution("Miss Scarlet", "Wrench", "Dining Room");
+								
+	//Tests for correct solution
+assertTrue(board.checkAccusation(correct));
+	//Tests for solution with wrong person
+assertFalse(board.checkAccusation(badPerson));
+	//Tests for solution with wrong weapon
+assertFalse(board.checkAccusation(badWeapon));
+	//Tests for solution with wrong room
+assertFalse(board.checkAccusation(badRoom));
 
 	}
 	
