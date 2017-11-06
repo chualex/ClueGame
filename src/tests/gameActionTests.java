@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.BeforeClass;
@@ -9,6 +10,8 @@ import org.junit.Test;
 
 import com.sun.prism.paint.Color;
 
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.Board;
 import clueGame.BoardCell;
 
@@ -93,13 +96,25 @@ assertFalse(board.checkAccusation(badRoom));
 	
 	@Test
 	public void testCreateSuggestion(){
-
+		ComputerPlayer player = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED);
+		player.createSuggestion();
 		//Tests that room matches player's current room
-
+		assertEquals(player.getSuggestedRoom(), "Gallery");
 		//Tests that last unsuggested weapon is suggested
+		Set<Card> unseenWeapons = new HashSet<Card>();
+		Card testWeapon = new Card("Knife", CardType.WEAPON);
+		unseenWeapons.add(testWeapon);
+		player.setUnseenWeapons(unseenWeapons);
+		Suggestion suggestion = player.createSuggestion();
+		assertEquals(suggestion.getWeapon(), "Knife");
 
 		//Tests that last unsuggested person is suggested
-
+		Set<Card> unseenPersons = new HashSet<Card>();
+		Card testPerson = new Card("Professor Swanson", CardType.PERSON);
+		unseenPersons.add(testPerson);
+		player.setUnseenPersons(unseenPersons);
+		suggestion = player.createSuggestion();
+		assertEquals(suggestion.getPerson(), "Professor Swanson");
 		//Tests that remaining unsuggested weapons are suggested randomly
 
 		//Tests that remaining unsuggested persons are suggested randomly
