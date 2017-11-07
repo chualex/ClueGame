@@ -11,6 +11,8 @@ public class Player {
 	private ArrayList<Card> myCards;
 	boolean isHuman;
 	
+
+	
 	public Player(String playerName, int row, int column, Color color, boolean human) {
 		super();
 		this.playerName = playerName;
@@ -21,6 +23,10 @@ public class Player {
 		myCards = new ArrayList<Card>();
 	}
 	
+	public Player() {
+			this.playerName = "Professor Swanson";
+	}
+
 	public ArrayList<Card> getMyCards() {
 		return myCards;
 	}

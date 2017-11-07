@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import com.sun.prism.paint.Color;
 
 import clueGame.Card;
 import clueGame.CardType;
+import clueGame.Player;
 import clueGame.Board;
 import clueGame.BoardCell;
 
@@ -55,14 +57,14 @@ public class gameActionTests {
 			}
 			assertTrue(location1);
 			assertTrue(location2);
-			assertTrue(lacation3);
+			assertTrue(location3);
 		}
 	//Tests that player goes to the room if it hasn't been visted and not last visited
 		ComputerPlayer player1 = new computerPlayer("Miss Scarlet", 9, 5, Color.RED);
 		board.calcTargets(9, 5, 2);
 		testTargets = board.getTargets();
 		BoardCell selection = player1.pickLocation(testTargets);
-		board.calcTargets(selection.getRow, selection.getColumn, 3);
+		board.calcTargets(selection.getRow(), selection.getColumn(), 3);
 		testTargets = board.getTargets();
 		assertFalse(testTargets.contains(board.getCellAt(9, 5)));
 		assertFalse(testTargets.contains(board.getCellAt(9, 4)));
@@ -96,7 +98,7 @@ assertFalse(board.checkAccusation(badRoom));
 	
 	@Test
 	public void testCreateSuggestion(){
-		ComputerPlayer player = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED);
+		ComputerPlayer player = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED, false);
 		player.createSuggestion();
 		//Tests that room matches player's current room
 		assertEquals(player.getSuggestedRoom(), "Gallery");
@@ -124,13 +126,53 @@ assertFalse(board.checkAccusation(badRoom));
 
 	@Test
 	public void  testDisprovingSuggestion(){
+		
+		Solution testSuggestion = new Solution("Miss Scarlet", "Knife", "Kitchen");
+		
+		Card matchOne = new Card("Miss Scarlet", CardType.PERSON);
+		Card matchTwo = new Card("Knife", CardType.WEAPON);
+		
+		
+		Card diffOne = new Card("Professor Swanson", CardType.PERSON);
+		Card diffTwo = new Card("Wrench", CardType.WEAPON);
+		Card diffThree = new Card("Gallery", CardType.ROOM);
 
+		ArrayList<Card> testCards = new ArrayList<Card>();
+		Player testPlayer = new Player();
+		
 		//Tests that if player only has one matching card that it is shown
-
+		
+		testCards.add(matchOne);
+		testCards.add(diffTwo);
+		testCards.add(diffThree);
+		
+		testPlayer.setMyCards(testCards);
+		String feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
+		assertEquals(feedback, matchOne.getCardName());
+		
+		testCards.clear();
 		//Tests that a player with more than one matching card selects a random one to show
+		
+		testCards.add(matchOne);
+		testCards.add(diffTwo);
+		testCards.add(matchTwo);
+		
+		testPlayer.setMyCards(testCards);
+		feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
 
+		
+		testCards.clear();
 		//Tests that null is returned if player has no matching cards
-
+		
+		testCards.add(diffOne);
+		testCards.add(diffTwo);
+		testCards.add(diffThree);
+		
+		testPlayer.setMyCards(testCards);
+		feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
+		assertEquals(null, feedback);
+		
+		testCards.clear();
 
 	}
 
