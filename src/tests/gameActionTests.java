@@ -36,7 +36,7 @@ public class gameActionTests {
 		
 
 	// Tests random selection
-		ComputerPlayer player = new computerPlayer("Miss Scarlet", 9, 5, Color.RED);
+		ComputerPlayer player = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED);
 		board.calcTargets(9, 5, 2);
 		Set<BoardCell> testTargets = board.getTargets();
 		boolean location1 = false;
@@ -60,7 +60,7 @@ public class gameActionTests {
 			assertTrue(location3);
 		}
 	//Tests that player goes to the room if it hasn't been visted and not last visited
-		ComputerPlayer player1 = new computerPlayer("Miss Scarlet", 9, 5, Color.RED);
+		ComputerPlayer player1 = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED);
 		board.calcTargets(9, 5, 2);
 		testTargets = board.getTargets();
 		BoardCell selection = player1.pickLocation(testTargets);
@@ -70,7 +70,7 @@ public class gameActionTests {
 		assertFalse(testTargets.contains(board.getCellAt(9, 4)));
 
 	//Tests random selection if no rooms in visited list
-		ComputerPlayer player2 = new computerPlayer("Miss Scarlet", 9, 5, Color.RED);
+		ComputerPlayer player2 = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED);
 		board.calcTargets(8, 5, 1);
 		testTargets = board.getTargets();
 		selection = player2.pickLocation(testTargets);
@@ -107,7 +107,7 @@ assertFalse(board.checkAccusation(badRoom));
 		Card testWeapon = new Card("Knife", CardType.WEAPON);
 		unseenWeapons.add(testWeapon);
 		player.setUnseenWeapons(unseenWeapons);
-		Suggestion suggestion = player.createSuggestion();
+		Solution suggestion = player.createSuggestion();
 		assertEquals(suggestion.getWeapon(), "Knife");
 
 		//Tests that last unsuggested person is suggested
@@ -117,11 +117,65 @@ assertFalse(board.checkAccusation(badRoom));
 		player.setUnseenPersons(unseenPersons);
 		suggestion = player.createSuggestion();
 		assertEquals(suggestion.getPerson(), "Professor Swanson");
+		
 		//Tests that remaining unsuggested weapons are suggested randomly
-
+		Card testWeapon2 = new Card("Wrench", CardType.WEAPON);
+		Card testWeapon3 = new Card("Rope", CardType.WEAPON);
+		unseenWeapons.add(testWeapon2);
+		unseenWeapons.add(testWeapon3);
+		player.setUnseenWeapons(unseenWeapons);
+		boolean w1, w2, w3 = false;
+		
+		for (int i = 0; i < 100; i++) {
+			suggestion = player.createSuggestion();
+			if (suggestion.getWeapon() == "Knife") {
+				w1 = true;
+			}
+			else if (suggestion.getWeapon() == "Wrench") {
+				w2 = true;
+			}
+			else if (suggestion.getWeapon() == "Rope") {
+				w3 = true;
+			}
+			else {
+				fail("remaining weapons were not selected randomly");
+			}
+		}
+		
+		assertTrue(w1);
+		assertTrue(w2);
+		assertTrue(w3);
+		
 		//Tests that remaining unsuggested persons are suggested randomly
-
-
+		
+		Card testPerson2 = new Card("Mrs. Gehrig White", CardType.PERSON);
+		Card testPerson3 = new Card("Colonel Mustard", CardType.PERSON);
+		unseenPersons.add(testPerson2);
+		unseenPersons.add(testPerson3);
+		player.setUnseenPersons(unseenPersons);
+		
+		boolean p1, p2, p3 = false;
+		
+		for (int i = 0; i < 100; i++) {
+			suggestion = player.createSuggestion();
+			if (suggestion.getPerson() == "Professor Swanson") {
+				p1 = true;
+			}
+			else if (suggestion.getPerson() == "Mrs. Gehrig White") {
+				p2 = true;
+			}
+			else if (suggestion.getPerson() == "Colonel Mustard") {
+				p3 = true;
+			}
+			else {
+				fail("remaining persons were not selected randomly");
+			}
+		}
+		
+		assertTrue(p1);
+		assertTrue(p2);
+		assertTrue(p3);
+		
 	}
 
 	@Test
@@ -131,14 +185,14 @@ assertFalse(board.checkAccusation(badRoom));
 		
 		Card matchOne = new Card("Miss Scarlet", CardType.PERSON);
 		Card matchTwo = new Card("Knife", CardType.WEAPON);
-		
+		Card matchThree = new Card("Kitchen", CardType.ROOM);
 		
 		Card diffOne = new Card("Professor Swanson", CardType.PERSON);
 		Card diffTwo = new Card("Wrench", CardType.WEAPON);
 		Card diffThree = new Card("Gallery", CardType.ROOM);
 
 		ArrayList<Card> testCards = new ArrayList<Card>();
-		Player testPlayer = new Player();
+		ComputerPlayer testPlayer = new ComputerPlayer();
 		
 		//Tests that if player only has one matching card that it is shown
 		
@@ -156,6 +210,29 @@ assertFalse(board.checkAccusation(badRoom));
 		testCards.add(matchOne);
 		testCards.add(diffTwo);
 		testCards.add(matchTwo);
+		
+		boolean one, two, three = false;
+	
+		String choice;
+
+		for (int i = 0; i < 100; i++) {
+			choice = testPlayer.disproveSuggestion(testSuggestion).getCardName();
+			if (choice == matchOne.getCardName()) {
+				one = true;
+			}
+			else if (choice == matchTwo.getCardName()) {
+				two = true;
+			}
+			else if (choice == matchThree.getCardName()) {
+				three = true;
+			}
+			else {
+				fail("invalid card selected");
+			}
+		}
+		assertTrue(one);
+		assertTrue(two);
+		assertTrue(three);
 		
 		testPlayer.setMyCards(testCards);
 		feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
@@ -178,19 +255,99 @@ assertFalse(board.checkAccusation(badRoom));
 
 	@Test
 	public void testHandlingSuggestion(){
-
+		
+		Player players[] = new Player[3];
+		
+		HumanPlayer human = new HumanPlayer("Madame Young Jon", 13, 8, Color.PINK, true);
+		ComputerPlayer compOne = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED, false);
+		ComputerPlayer compTwo = new ComputerPlayer("Professor Swanson", Color.GREEN, 16, 12, false);
+		
+		Card one = new Card("Miss Scarlet", CardType.PERSON);
+		Card two = new Card("Knife", CardType.WEAPON);
+		Card three = new Card("Kitchen", CardType.ROOM);
+		Card four = new Card("Professor Swanson", CardType.PERSON);
+		Card five = new Card("Wrench", CardType.WEAPON);
+		Card six = new Card("Gallery", CardType.ROOM);
+		Card seven = new Card("Mrs. Gehrig White", CardType.PERSON);
+		Card eight = new Card("Rope", CardType.WEAPON);
+		Card nine = new Card("Office", CardType.ROOM);
+		
+		ArrayList<Card> humanCards = new ArrayList<Card>();
+		ArrayList<Card> compOneCards = new ArrayList<Card>();
+		ArrayList<Card> compTwoCards = new ArrayList<Card>();
+		
+		humanCards.add(one);
+		humanCards.add(two);
+		humanCards.add(three);
+		
+		compOneCards.add(four);
+		compOneCards.add(five);
+		compOneCards.add(six);
+		
+		compTwoCards.add(seven);
+		compTwoCards.add(eight);
+		compTwoCards.add(nine);
+		
+		human.setMyCards(humanCards);
+		compOne.setMyCards(compOneCards);
+		compTwo.setMyCards(compTwoCards);
+		
+		players[0] = human;
+		players[1] = compOne;
+		players[2] = compTwo;
+		
+		
+		Solution testSolOne = Solution("Colonel Mustard", "Candlestick", "Library");
+		Solution testSolTwo = Solution("Professor Swanson", "Wrench", "Gallery");
+		Solution testSolThree = Solution("Miss Scarlet", "Knife", "Kitchen");
+		Solution testSolFour = Solution("Professor Swanson", "Candlestick", "Office");
+		Solution testSolFive = Solution("Miss Scarlet", "Candlestick", "Gallery");
+		
 		//Tests that a suggestion nobody can disprove returns a null
-
+		for (int i = 0; i < players.length; i++) {
+			assertTrue(players[i].disproveSuggestion(testSolOne) == null);
+		}
+		
 		//Tests that a suggestion that only the accuser can disprove (should return null)
-
+		assertTrue(players[1].disproveSuggestion(testSolTwo) == null);
+		
 		//Tests suggestion that only the human player can disprove (should return card)
-
+		
+		boolean cardOne, cardTwo, cardThree = false;
+		String choice;
+		for (int i = 0; i < 100; i++) {
+			choice = players[0].disproveSuggestion(testSolThree).getCardName();
+			if (choice == "Miss Scarlet") {
+				cardOne = true;
+			}
+			else if (choice == "Knife") {
+				cardTwo = true;
+			}
+			else if (choice == "Kitchen") {
+				cardThree = true;
+			}
+			else {
+				fail("Player did not properly disprove");
+			}
+		}
+		assertTrue(cardOne);
+		assertTrue(cardTwo);
+		assertTrue(cardThree);
+		
 		//Tests suggestion that only human can disprove w/ human as accuser (should return null)
-
+		assertTrue(players[0].disproveSuggestion(testSolThree) == null);
+		
 		//Tests suggestion that 2 players can disprove and ensures that one answer is returned
+		
+			choice = players[1].disproveSuggestion(testSolFour).getCardName();
+			assertTrue(choice == "Professor Swanson");
+			assertFalse(players[2].disproveSuggestion(testSolFour).getCardName() == "Office");
+		
 
 		//Tests a suggestion that both a human and computer can disprove (computer should show card)
-
+		
+			assertTrue(players[0].disproveSuggestion(testSolFive) == null);
+			assertTrue(players[1].disproveSuggestion(testSolFive).getCardName() == "Gallery");
 
 	}
 
