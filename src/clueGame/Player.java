@@ -23,10 +23,6 @@ public class Player {
 		myCards = new ArrayList<Card>();
 	}
 	
-	public Player() {
-			this.playerName = "Professor Swanson";
-	}
-
 	public ArrayList<Card> getMyCards() {
 		return myCards;
 	}

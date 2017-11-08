@@ -20,7 +20,17 @@ import clueGame.BoardCell;
 public class gameActionTests {
 
 	private static Board board;
-
+	
+	public static Card missScarlet;
+	public static Card knife;
+	public static Card kitchen;
+	public static Card profSwanson;
+	public static Card wrench;
+	public static Card gallery;
+	public static Card mrsGehrigWhite;
+	public static Card rope;
+	public static Card office; 
+	public static Card colonelMustard;
 
 	@BeforeClass
 	public static void setUp() {
@@ -29,6 +39,17 @@ public class gameActionTests {
 		// set the file names to use my config files
 		board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt", "PlayerFile.txt", "WeaponsFile.txt");
 		board.initialize();
+		
+		missScarlet = new Card("Miss Scarlet", CardType.PERSON);
+		knife = new Card("Knife", CardType.WEAPON);
+		kitchen = new Card("Kitchen", CardType.ROOM);
+		profSwanson = new Card("Professor Swanson", CardType.PERSON);
+		wrench = new Card("Wrench", CardType.WEAPON);
+		gallery = new Card("Gallery", CardType.ROOM);
+		mrsGehrigWhite = new Card("Mrs. Gehrig White", CardType.PERSON);
+		rope = new Card("Rope", CardType.WEAPON);
+		office = new Card("Office", CardType.ROOM);
+		colonelMustard = new Card("Colonel Mustard", CardType.PERSON);
 	}
 	
 	@Test
@@ -104,25 +125,25 @@ assertFalse(board.checkAccusation(badRoom));
 		assertEquals(player.getSuggestedRoom(), "Gallery");
 		//Tests that last unsuggested weapon is suggested
 		Set<Card> unseenWeapons = new HashSet<Card>();
-		Card testWeapon = new Card("Knife", CardType.WEAPON);
-		unseenWeapons.add(testWeapon);
+	
+		unseenWeapons.add(knife);
 		player.setUnseenWeapons(unseenWeapons);
 		Solution suggestion = player.createSuggestion();
 		assertEquals(suggestion.getWeapon(), "Knife");
 
 		//Tests that last unsuggested person is suggested
 		Set<Card> unseenPersons = new HashSet<Card>();
-		Card testPerson = new Card("Professor Swanson", CardType.PERSON);
-		unseenPersons.add(testPerson);
+	
+		unseenPersons.add(profSwanson);
 		player.setUnseenPersons(unseenPersons);
 		suggestion = player.createSuggestion();
 		assertEquals(suggestion.getPerson(), "Professor Swanson");
 		
 		//Tests that remaining unsuggested weapons are suggested randomly
-		Card testWeapon2 = new Card("Wrench", CardType.WEAPON);
-		Card testWeapon3 = new Card("Rope", CardType.WEAPON);
-		unseenWeapons.add(testWeapon2);
-		unseenWeapons.add(testWeapon3);
+
+	
+		unseenWeapons.add(wrench);
+		unseenWeapons.add(rope);
 		player.setUnseenWeapons(unseenWeapons);
 		boolean w1, w2, w3 = false;
 		
@@ -148,10 +169,10 @@ assertFalse(board.checkAccusation(badRoom));
 		
 		//Tests that remaining unsuggested persons are suggested randomly
 		
-		Card testPerson2 = new Card("Mrs. Gehrig White", CardType.PERSON);
-		Card testPerson3 = new Card("Colonel Mustard", CardType.PERSON);
-		unseenPersons.add(testPerson2);
-		unseenPersons.add(testPerson3);
+		
+		
+		unseenPersons.add(mrsGehrigWhite);
+		unseenPersons.add(colonelMustard);
 		player.setUnseenPersons(unseenPersons);
 		
 		boolean p1, p2, p3 = false;
@@ -182,48 +203,40 @@ assertFalse(board.checkAccusation(badRoom));
 	public void  testDisprovingSuggestion(){
 		
 		Solution testSuggestion = new Solution("Miss Scarlet", "Knife", "Kitchen");
-		
-		Card matchOne = new Card("Miss Scarlet", CardType.PERSON);
-		Card matchTwo = new Card("Knife", CardType.WEAPON);
-		Card matchThree = new Card("Kitchen", CardType.ROOM);
-		
-		Card diffOne = new Card("Professor Swanson", CardType.PERSON);
-		Card diffTwo = new Card("Wrench", CardType.WEAPON);
-		Card diffThree = new Card("Gallery", CardType.ROOM);
-
 		ArrayList<Card> testCards = new ArrayList<Card>();
 		ComputerPlayer testPlayer = new ComputerPlayer();
 		
 		//Tests that if player only has one matching card that it is shown
 		
-		testCards.add(matchOne);
-		testCards.add(diffTwo);
-		testCards.add(diffThree);
+		testCards.add(missScarlet);
+		testCards.add(wrench);
+		testCards.add(gallery);
 		
 		testPlayer.setMyCards(testCards);
 		String feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
-		assertEquals(feedback, matchOne.getCardName());
+		assertEquals(feedback, missScarlet.getCardName());
 		
 		testCards.clear();
 		//Tests that a player with more than one matching card selects a random one to show
 		
-		testCards.add(matchOne);
-		testCards.add(diffTwo);
-		testCards.add(matchTwo);
+		testCards.add(missScarlet);
+		testCards.add(wrench);
+		testCards.add(kitchen);
+		testPlayer.setMyCards(testCards);
 		
 		boolean one, two, three = false;
 	
-		String choice;
+	
 
 		for (int i = 0; i < 100; i++) {
-			choice = testPlayer.disproveSuggestion(testSuggestion).getCardName();
-			if (choice == matchOne.getCardName()) {
+			feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
+			if (feedback == missScarlet.getCardName()) {
 				one = true;
 			}
-			else if (choice == matchTwo.getCardName()) {
+			else if (feedback == knife.getCardName()) {
 				two = true;
 			}
-			else if (choice == matchThree.getCardName()) {
+			else if (feedback == kitchen.getCardName()) {
 				three = true;
 			}
 			else {
@@ -233,17 +246,13 @@ assertFalse(board.checkAccusation(badRoom));
 		assertTrue(one);
 		assertTrue(two);
 		assertTrue(three);
-		
-		testPlayer.setMyCards(testCards);
-		feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
-
-		
 		testCards.clear();
+		
 		//Tests that null is returned if player has no matching cards
 		
-		testCards.add(diffOne);
-		testCards.add(diffTwo);
-		testCards.add(diffThree);
+		testCards.add(profSwanson);
+		testCards.add(wrench);
+		testCards.add(gallery);
 		
 		testPlayer.setMyCards(testCards);
 		feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
@@ -262,31 +271,23 @@ assertFalse(board.checkAccusation(badRoom));
 		ComputerPlayer compOne = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED, false);
 		ComputerPlayer compTwo = new ComputerPlayer("Professor Swanson", Color.GREEN, 16, 12, false);
 		
-		Card one = new Card("Miss Scarlet", CardType.PERSON);
-		Card two = new Card("Knife", CardType.WEAPON);
-		Card three = new Card("Kitchen", CardType.ROOM);
-		Card four = new Card("Professor Swanson", CardType.PERSON);
-		Card five = new Card("Wrench", CardType.WEAPON);
-		Card six = new Card("Gallery", CardType.ROOM);
-		Card seven = new Card("Mrs. Gehrig White", CardType.PERSON);
-		Card eight = new Card("Rope", CardType.WEAPON);
-		Card nine = new Card("Office", CardType.ROOM);
+		
 		
 		ArrayList<Card> humanCards = new ArrayList<Card>();
 		ArrayList<Card> compOneCards = new ArrayList<Card>();
 		ArrayList<Card> compTwoCards = new ArrayList<Card>();
 		
-		humanCards.add(one);
-		humanCards.add(two);
-		humanCards.add(three);
+		humanCards.add(missScarlet);
+		humanCards.add(knife);
+		humanCards.add(kitchen);
 		
-		compOneCards.add(four);
-		compOneCards.add(five);
-		compOneCards.add(six);
+		compOneCards.add(profSwanson);
+		compOneCards.add(wrench);
+		compOneCards.add(gallery);
 		
-		compTwoCards.add(seven);
-		compTwoCards.add(eight);
-		compTwoCards.add(nine);
+		compTwoCards.add(mrsGehrigWhite);
+		compTwoCards.add(rope);
+		compTwoCards.add(office);
 		
 		human.setMyCards(humanCards);
 		compOne.setMyCards(compOneCards);
