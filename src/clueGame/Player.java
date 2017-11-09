@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public abstract class Player {
-	private String playerName;
-	private int row;
-	private int column;
+	protected String playerName;
+	protected int row;
+	protected int column;
 	private Color color;
 	private ArrayList<Card> myCards;
 	private ArrayList<Card> seenCards;
@@ -62,6 +62,6 @@ public abstract class Player {
 		
 		return choice;
 	}
-	public BoardCell pickLocation(Set<BoardCell> targets);
+	public abstract BoardCell pickLocation(Set<BoardCell> targets);
 
 }

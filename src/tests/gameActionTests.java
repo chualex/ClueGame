@@ -137,16 +137,16 @@ public class gameActionTests {
 	@Test
 	public void testCreateSuggestion(){
 		ComputerPlayer player = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED, false);
-
+		Solution suggestion = player.createSuggestion(board);
 
 		//Tests that room matches player's current room
-		assertEquals(player.getSuggestedRoom(), "Gallery");
+		assertEquals(suggestion.getRoom(), "Gallery");
 		//Tests that last unsuggested weapon is suggested
 		Set<Card> unseenWeapons = new HashSet<Card>();
 
 		unseenWeapons.add(knife);
 		player.setUnseenWeapons(unseenWeapons);
-		Solution suggestion = player.createSuggestion(board.getCellAt(9, 5));
+		suggestion = player.createSuggestion(board);
 		assertEquals(suggestion.getWeapon(), "Knife");
 
 		//Tests that last unsuggested person is suggested
@@ -154,7 +154,7 @@ public class gameActionTests {
 
 		unseenPersons.add(profSwanson);
 		player.setUnseenPersons(unseenPersons);
-		suggestion = player.createSuggestion(board.getCellAt(9, 5));
+		suggestion = player.createSuggestion(board);
 		assertEquals(suggestion.getPerson(), "Professor Swanson");
 
 		//Tests that remaining unsuggested weapons are suggested randomly
@@ -164,7 +164,7 @@ public class gameActionTests {
 		boolean w1 = false, w2 = false, w3 = false;
 
 		for (int i = 0; i < 100; i++) {
-			suggestion = player.createSuggestion(board.getCellAt(9, 5));
+			suggestion = player.createSuggestion(board);
 			if (suggestion.getWeapon() == "Knife") {
 				w1 = true;
 			}
@@ -190,7 +190,7 @@ public class gameActionTests {
 		boolean p1 = false, p2 = false, p3 = false;
 
 		for (int i = 0; i < 100; i++) {
-			suggestion = player.createSuggestion(board.getCellAt(9, 5));
+			suggestion = player.createSuggestion(board);
 			if (suggestion.getPerson() == "Professor Swanson") {
 				p1 = true;
 			}

@@ -9,10 +9,14 @@ import java.util.Random;
 public class ComputerPlayer extends Player {
 private ArrayList<Card> unseenCards;
 private char lastRoom;
+private Set<Card> unseenWeapons;
+private Set<Card> unseenPersons;
 
 public ComputerPlayer(String playerName, int row, int column, Color color, boolean human) {
 	super(playerName, row, column, color, human);
 	unseenCards = new ArrayList<Card>();
+	unseenPersons = new HashSet<Card>();
+	unseenWeapons = new HashSet<Card>();
 }
 
 public BoardCell pickLocation(Set<BoardCell> targets) {
@@ -39,8 +43,38 @@ public BoardCell pickLocation(Set<BoardCell> targets) {
 	return cell;
 }
 
-public Solution createSuggestion(BoardCell cell) {
-	return null;
+public Solution createSuggestion(Board board) {
+	String room = " ";
+	String weapon = " ";
+	String person = " ";
+	
+	BoardCell cellAt = board.getCellAt(row, column);
+	room = board.getLegend().get(cellAt.getInitial());
+	
+	if (unseenWeapons.size() > 0) {
+		Random rand = new Random();
+		int pick = rand.nextInt(unseenWeapons.size());
+		int count = 0;
+		for (Card card: unseenWeapons) {
+			if (pick == count) {
+				weapon = card.getCardName();
+			}
+			count++;
+		}
+	}
+	if (unseenPersons.size() > 0) {
+		Random rand = new Random();
+		int pick = rand.nextInt(unseenPersons.size());
+		int count = 0;
+		for (Card card: unseenPersons) {
+			if (pick == count) {
+				person = card.getCardName();
+			}
+			count++;
+		}
+	}
+	Solution suggestion = new Solution(person, weapon, room);
+	return suggestion;
 	
 }
 
@@ -64,19 +98,14 @@ public void setLastRoom(char lastRoom) {
 	this.lastRoom = lastRoom;
 }
 
-public String getSuggestedRoom() {
-	// TODO Auto-generated method stub
-	return " ";
-}
 
-public void setUnseenWeapons(Set<Card> unseenWeapons) {
-	// TODO Auto-generated method stub
+public void setUnseenWeapons(Set<Card> a) {
+	this.unseenWeapons = a;
 	
 }
 
-public void setUnseenPersons(Set<Card> unseenPersons) {
-	// TODO Auto-generated method stub
-	
+public void setUnseenPersons(Set<Card> a) {
+	this.unseenPersons = a;
 }
 
 
