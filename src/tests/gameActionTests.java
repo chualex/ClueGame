@@ -112,6 +112,7 @@ public class gameActionTests {
 		assertTrue(location1);
 		assertTrue(location2);
 		assertTrue(location3);
+		assertTrue(location4);
 	}
 
 	@Test
@@ -239,9 +240,6 @@ public class gameActionTests {
 			if (feedback == missScarlet.getCardName()) {
 				one = true;
 			}
-			else if (feedback == knife.getCardName()) {
-				two = true;
-			}
 			else if (feedback == kitchen.getCardName()) {
 				three = true;
 			}
@@ -250,8 +248,9 @@ public class gameActionTests {
 			}
 		}
 		assertTrue(one);
-		assertTrue(two);
 		assertTrue(three);
+		
+		
 		testCards.clear();
 
 		//Tests that null is returned if player has no matching cards
@@ -260,8 +259,8 @@ public class gameActionTests {
 		testCards.add(gallery);
 
 		testPlayer.setMyCards(testCards);
-		feedback = testPlayer.disproveSuggestion(testSuggestion).getCardName();
-		assertEquals(null, feedback);
+		Card test = testPlayer.disproveSuggestion(testSuggestion);
+		assertEquals(null, test);
 
 		testCards.clear();
 

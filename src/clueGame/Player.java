@@ -58,9 +58,18 @@ public abstract class Player {
 	}
 	
 	public Card disproveSuggestion(Solution suggested) {
-		Card choice = new Card("Miss scarlet", CardType.PERSON);
-		
-		return choice;
+		for (Card card: myCards) {
+			if (card.getCardName().equalsIgnoreCase(suggested.getPerson())) {
+				return card;
+			}
+			if (card.getCardName().equalsIgnoreCase(suggested.getWeapon())) {
+				return card;
+			}
+			if (card.getCardName().equalsIgnoreCase(suggested.getRoom())) {
+				return card;
+			}
+		}
+		return null;
 	}
 	public abstract BoardCell pickLocation(Set<BoardCell> targets);
 
