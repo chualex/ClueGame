@@ -74,4 +74,16 @@ public class BoardCell {
 	public void setDoorDirection(DoorDirection doorDirection) {
 		this.doorDirection = doorDirection;
 	}
+
+	public int getRow() {
+		// TODO Auto-generated method stub
+		return row;
+	}
+
+	public int getColumn() {
+		// TODO Auto-generated method stub
+		return column;
+	}
+
+
 }

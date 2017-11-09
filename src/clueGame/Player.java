@@ -9,6 +9,7 @@ public class Player {
 	private int column;
 	private Color color;
 	private ArrayList<Card> myCards;
+	private ArrayList<Card> seenCards;
 	boolean isHuman;
 	
 
@@ -55,7 +56,11 @@ public class Player {
 		return isHuman;
 	}
 	
-	
+	public Card disproveSuggestion(Solution suggested) {
+		Card choice = new Card("Miss scarlet", CardType.PERSON);
+		
+		return choice;
+	}
 	
 
 }

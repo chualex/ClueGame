@@ -475,8 +475,20 @@ public class Board {
 		
 	}
 
-	
+	public Card handleSuggestion(Solution testSolOne) {
+		Card choice = new Card("Knife", CardType.WEAPON);
+		return choice;
+	}
 
+	public boolean checkAccusation(Solution accusation) {
+		
+		return false;
+	}
+
+	public void setPlayers(Player[] testPlayers) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 
