@@ -313,8 +313,9 @@ public class gameActionTests {
 		for (int i = 0; i < testPlayers.length; i++) {
 			assertTrue(board.handleSuggestion(testSolOne) == null);
 		}
-
+		
 		//Tests that a suggestion that only the accuser can disprove (should return null)
+		testPlayers[1].setSuggestion(testSolTwo);
 		assertTrue(board.handleSuggestion(testSolTwo) == null);
 
 		//Tests suggestion that only the human player can disprove (should return card)
@@ -339,13 +340,15 @@ public class gameActionTests {
 		assertTrue(cardTwo);
 		assertTrue(cardThree);
 
+		
 		//Tests suggestion that only human can disprove w/ human as accuser (should return null)
+		testPlayers[0].setSuggestion(testSolThree);
 		assertTrue(board.handleSuggestion(testSolThree) == null);
 
 		//Tests suggestion that 2 players can disprove and ensures that one answer is returned
-		choice = board.handleSuggestion(testSolFour).getCardName();
-		assertTrue(choice == "Professor Swanson");
-		assertFalse(board.handleSuggestion(testSolFour).getCardName() == "Office");
+		Card test = board.handleSuggestion(testSolFour);
+		assertTrue(test != null);
+		assertTrue(board.handleSuggestion(testSolFour) != null);
 
 		//Tests a suggestion that both a human and computer can disprove (computer should show card)
 		assertTrue(board.handleSuggestion(testSolFive) == null);

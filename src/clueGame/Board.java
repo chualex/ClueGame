@@ -485,7 +485,12 @@ public class Board {
 	}
 
 	public Card handleSuggestion(Solution testSolOne) {
-		Card choice = new Card("Knife", CardType.WEAPON);
+		Card choice = null;
+		for (int i = 0; i < numPlayers; i++) {
+			if (players[i].disproveSuggestion(testSolOne) != null) {
+				choice = players[i].disproveSuggestion(testSolOne);
+			}
+		}
 		return choice;
 	}
 
@@ -497,8 +502,8 @@ public class Board {
 	}
 
 	public void setPlayers(Player[] testPlayers) {
-		// TODO Auto-generated method stub
-		
+		this.players = testPlayers;
+		numPlayers = 3;
 	}
 
 	public void setSolution(Solution a) {

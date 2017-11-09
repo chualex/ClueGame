@@ -13,6 +13,7 @@ public abstract class Player {
 	private ArrayList<Card> myCards;
 	private ArrayList<Card> seenCards;
 	boolean isHuman;
+	protected Solution suggestion;
 	
 
 	
@@ -24,6 +25,7 @@ public abstract class Player {
 		this.color = color;
 		this.isHuman = human;
 		myCards = new ArrayList<Card>();
+		suggestion = new Solution(" ", " ", " ");
 	}
 	
 	public ArrayList<Card> getMyCards() {
@@ -60,16 +62,17 @@ public abstract class Player {
 	
 	public Card disproveSuggestion(Solution suggested) {
 		ArrayList<Card> matchingCards = new ArrayList<Card>();
-
-		for (Card card: myCards) {
-			if (card.getCardName().equalsIgnoreCase(suggested.getPerson())) {
-				matchingCards.add(card);
-			}
-			if (card.getCardName().equalsIgnoreCase(suggested.getWeapon())) {
-				matchingCards.add(card);
-			}
-			if (card.getCardName().equalsIgnoreCase(suggested.getRoom())) {
-				matchingCards.add(card);
+		if (suggested.compareTo(this.suggestion) == false){
+			for (Card card: myCards) {
+				if (card.getCardName().equalsIgnoreCase(suggested.getPerson())) {
+					matchingCards.add(card);
+				}
+				if (card.getCardName().equalsIgnoreCase(suggested.getWeapon())) {
+					matchingCards.add(card);
+				}
+				if (card.getCardName().equalsIgnoreCase(suggested.getRoom())) {
+					matchingCards.add(card);
+				}
 			}
 		}
 		if (matchingCards.size() > 0) { 
@@ -80,5 +83,9 @@ public abstract class Player {
 		return null;
 	}
 	public abstract BoardCell pickLocation(Set<BoardCell> targets);
+
+	public void setSuggestion(Solution solution) {
+		suggestion = solution;
+	}
 
 }

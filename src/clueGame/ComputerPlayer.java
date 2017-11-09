@@ -73,7 +73,8 @@ public Solution createSuggestion(Board board) {
 			count++;
 		}
 	}
-	Solution suggestion = new Solution(person, weapon, room);
+	Solution output = new Solution(person, weapon, room);
+	suggestion = output;
 	return suggestion;
 	
 }
