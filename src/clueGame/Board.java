@@ -50,6 +50,8 @@ public class Board {
 	private int numPlayers;
 	// Array for deck
 	private ArrayList<Card> deck;
+	// Solution for the game
+	private Solution solution;
 
 	public Board() {
 		legend = new HashMap<Character, String>();
@@ -495,6 +497,10 @@ public class Board {
 	public void setPlayers(Player[] testPlayers) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void setSolution(Solution a) {
+		this.solution = a;
 	}
 
 

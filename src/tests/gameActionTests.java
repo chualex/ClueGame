@@ -117,6 +117,7 @@ public class gameActionTests {
 	@Test
 	public void testAccusation(){
 		Solution solution = new Solution("Miss Scarlet", "Wrench", "Kitchen"); 
+		board.setSolution(solution);
 		Solution correct = new Solution("Miss Scarlet", "Wrench", "Kitchen");
 		Solution badPerson = new Solution("Professor Swanson", "Wrench", "Kitchen");
 		Solution badWeapon = new Solution("Miss Scarlet", "Knife", "Kitchen");
