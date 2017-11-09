@@ -84,26 +84,29 @@ public class gameActionTests {
 		location1 = false;
 		location2 = false;
 		location3 = false;
-
+		boolean location4 = false;
 		//Tests that player goes to the room if it hasn't been visted and not last visited
 		ComputerPlayer player1 = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED, false);
 		for (int i = 0; i < 2000; i++) {
-			board.calcTargets(9, 5, 2);
+			board.calcTargets(9, 5, 1);
 			testTargets = board.getTargets();
 			BoardCell selection = player1.pickLocation(testTargets);
 			int a = selection.getRow();
 			int j = selection.getColumn();
-			board.calcTargets(a, j, 2);
+			board.calcTargets(a, j, 1);
 			testTargets = board.getTargets();
 			selection = player1.pickLocation(testTargets);
-			if (selection == board.getCellAt(7, 5)) {
+			if (selection == board.getCellAt(8, 6)) {
 				location1 = true;
 			}
 			if (selection == board.getCellAt(9, 5)) {
 				location2 = true;
 			}
-			if (selection == board.getCellAt(6, 5)) {
+			if (selection == board.getCellAt(8, 4)) {
 				location3 = true;
+			}
+			if (selection == board.getCellAt(7, 5)) {
+				location4 = true;
 			}
 		}
 		assertTrue(location1);
