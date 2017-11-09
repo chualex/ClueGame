@@ -2,8 +2,9 @@ package clueGame;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Set;
 
-public class Player {
+public abstract class Player {
 	private String playerName;
 	private int row;
 	private int column;
@@ -61,6 +62,6 @@ public class Player {
 		
 		return choice;
 	}
-	
+	public BoardCell pickLocation(Set<BoardCell> targets);
 
 }

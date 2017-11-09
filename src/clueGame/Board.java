@@ -292,9 +292,15 @@ public class Board {
 			if (split[2].equalsIgnoreCase("Player")) {
 				isHuman = true;
 			}
+			
 			int row = intConverter(split[3]);
-			int column = intConverter(split[4]);;
-			players[i] = new Player(playerName, row, column, color, isHuman);
+			int column = intConverter(split[4]);
+			if (isHuman) {
+				players[i] = new HumanPlayer(playerName, row, column, color, isHuman);
+			}
+			else {
+				players[i] = new ComputerPlayer(playerName, row, column, color, isHuman);
+			}
 			Card player = new Card(split[0], CardType.PERSON);
 			deck.add(player);
 		}

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Random; 
 
 public class ComputerPlayer extends Player {
 private ArrayList<Card> unseenCards;
@@ -16,7 +17,21 @@ public ComputerPlayer(String playerName, int row, int column, Color color, boole
 
 public BoardCell pickLocation(Set<BoardCell> targets) {
 	BoardCell cell = null;
-	
+	for (BoardCell check : targets) {
+		if ((check.getInitial() != 'X' || check.getInitial() != 'W') && lastRoom != check.getInitial()) {
+			return check;
+		}
+		
+	}
+	Random rand = new Random();
+	int pick = rand.nextInt(targets.size() - 1) + 0;
+	int count = 0;
+	for (BoardCell randomCell : targets) {
+		if (count == pick) {
+			return randomCell;
+		}
+		count++;
+	}
 	
 	return cell;
 }
