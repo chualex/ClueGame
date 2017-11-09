@@ -351,7 +351,6 @@ public class gameActionTests {
 		assertTrue(board.handleSuggestion(testSolFour) != null);
 
 		//Tests a suggestion that both a human and computer can disprove (computer should show card)
-		assertTrue(board.handleSuggestion(testSolFive) == null);
 		assertTrue(board.handleSuggestion(testSolFive).getCardName() == "Gallery");
 	}
 }

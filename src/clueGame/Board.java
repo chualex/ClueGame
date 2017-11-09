@@ -485,13 +485,30 @@ public class Board {
 	}
 
 	public Card handleSuggestion(Solution testSolOne) {
-		Card choice = null;
+		ArrayList<Card> matchingCardsHuman = new ArrayList<Card>();
+		ArrayList<Card> matchingCardsComputer = new ArrayList<Card>();
 		for (int i = 0; i < numPlayers; i++) {
-			if (players[i].disproveSuggestion(testSolOne) != null) {
-				choice = players[i].disproveSuggestion(testSolOne);
+			Card currentCard = players[i].disproveSuggestion(testSolOne);
+			if (currentCard != null) {
+				if(players[i].isHuman) {
+					matchingCardsHuman.add(currentCard);
+				}
+				else {
+					matchingCardsComputer.add(currentCard);
+				}
 			}
 		}
-		return choice;
+		if (matchingCardsComputer.size() > 0) {
+			Random rand = new Random();
+			int pick = rand.nextInt(matchingCardsComputer.size());
+			return matchingCardsComputer.get(pick);
+		}
+		else if (matchingCardsHuman.size() > 0) {
+			Random rand = new Random();
+			int pick = rand.nextInt(matchingCardsHuman.size());
+			return matchingCardsHuman.get(pick);
+		}
+		return null;
 	}
 
 	public boolean checkAccusation(Solution accusation) {
