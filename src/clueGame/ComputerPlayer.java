@@ -18,16 +18,19 @@ public ComputerPlayer(String playerName, int row, int column, Color color, boole
 public BoardCell pickLocation(Set<BoardCell> targets) {
 	BoardCell cell = null;
 	for (BoardCell check : targets) {
-		if ((check.getInitial() != 'X' || check.getInitial() != 'W') && lastRoom != check.getInitial()) {
+		if (check.getInitial() != 'X' && check.getInitial() != 'W' && lastRoom != check.getInitial()) {
+			lastRoom = check.getInitial();
 			return check;
 		}
-		
 	}
 	Random rand = new Random();
-	int pick = rand.nextInt(targets.size() - 1) + 0;
+	int pick = rand.nextInt(targets.size());
 	int count = 0;
 	for (BoardCell randomCell : targets) {
 		if (count == pick) {
+			if (randomCell.getInitial() != 'X' && randomCell.getInitial() != 'W') {
+				lastRoom = randomCell.getInitial();
+			}
 			return randomCell;
 		}
 		count++;

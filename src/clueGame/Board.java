@@ -424,6 +424,7 @@ public class Board {
 	 */
 	public void calcTargets(int a, int b, int pathLength) {
 		targets.clear();
+		visited.clear();
 		BoardCell startCell = getCellAt(a, b);
 		findAllTargets(startCell, pathLength);
 	}

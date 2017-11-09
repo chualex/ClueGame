@@ -81,23 +81,34 @@ public class gameActionTests {
 		assertTrue(location1);
 		assertTrue(location2);
 		assertTrue(location3);
+		location1 = false;
+		location2 = false;
+		location3 = false;
 
 		//Tests that player goes to the room if it hasn't been visted and not last visited
 		ComputerPlayer player1 = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED, false);
-		board.calcTargets(9, 5, 2);
-		testTargets = board.getTargets();
-		BoardCell selection = player1.pickLocation(testTargets);
-		board.calcTargets(selection.getRow(), selection.getColumn(), 3);
-		testTargets = board.getTargets();
-		assertFalse(testTargets.contains(board.getCellAt(9, 5)));
-		assertFalse(testTargets.contains(board.getCellAt(9, 4)));
-
-		//Tests random selection if no rooms in visited list
-		ComputerPlayer player2 = new ComputerPlayer("Miss Scarlet", 9, 5, Color.RED, false);
-		board.calcTargets(8, 5, 1);
-		testTargets = board.getTargets();
-		selection = player2.pickLocation(testTargets);
-		assertEquals(selection, board.getCellAt(9, 5));
+		for (int i = 0; i < 2000; i++) {
+			board.calcTargets(9, 5, 2);
+			testTargets = board.getTargets();
+			BoardCell selection = player1.pickLocation(testTargets);
+			int a = selection.getRow();
+			int j = selection.getColumn();
+			board.calcTargets(a, j, 2);
+			testTargets = board.getTargets();
+			selection = player1.pickLocation(testTargets);
+			if (selection == board.getCellAt(7, 5)) {
+				location1 = true;
+			}
+			if (selection == board.getCellAt(9, 5)) {
+				location2 = true;
+			}
+			if (selection == board.getCellAt(6, 5)) {
+				location3 = true;
+			}
+		}
+		assertTrue(location1);
+		assertTrue(location2);
+		assertTrue(location3);
 	}
 
 	@Test
