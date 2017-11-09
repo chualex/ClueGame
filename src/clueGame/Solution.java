@@ -28,6 +28,13 @@ public class Solution {
 	public void setRoom(String room) {
 		this.room = room;
 	}
-	
+	public boolean compareTo(Solution a) {
+		if (a.getPerson().equalsIgnoreCase(this.getPerson()) && a.getRoom().equalsIgnoreCase(this.getRoom()) && a.getWeapon().equalsIgnoreCase(this.getWeapon())) {
+			return true;
+		}
+		else {
+		return false;
+		}
+	}
 
 }

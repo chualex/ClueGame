@@ -490,7 +490,9 @@ public class Board {
 	}
 
 	public boolean checkAccusation(Solution accusation) {
-		
+		if (solution.compareTo(accusation) == true) {
+			return true;
+		}
 		return false;
 	}
 
