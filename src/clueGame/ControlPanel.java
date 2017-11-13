@@ -12,6 +12,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class ControlPanel extends JPanel{
+	//instance variables for the text-fields
 	private JTextField turn;
 	private JTextField diceRoll; 
 	private JTextField guess;
@@ -29,17 +30,19 @@ public class ControlPanel extends JPanel{
 		add(panel);
 		panel = createDiceRollPanel();
 		add(panel);
-		panel = createGuestPanel();
+		panel = createGuessPanel();
 		add(panel);
-		panel = createGuestResultPanel();
+		panel = createGuessResultPanel();
 		add(panel);
 		
 	}
 	private JPanel createWhoseTurnPanel() {
+		//Creates the panel for displaying which player has the turn
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,1));
 		JLabel turnLabel = new JLabel("Player:");
 		turn = new JTextField(20);
+		turn.setEditable(false);
 		panel.add(turnLabel);
 		panel.add(turn);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Whose turn?"));
@@ -47,6 +50,7 @@ public class ControlPanel extends JPanel{
 	}
 	
 	private JPanel createDiceRollPanel() {
+		//Creates the panel for displaying the dice roll
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,1));
 		JLabel rollLabel = new JLabel("Roll:");
@@ -58,7 +62,8 @@ public class ControlPanel extends JPanel{
 		return panel;
 	}
 	
-	private JPanel createGuestPanel() {
+	private JPanel createGuessPanel() {
+		//Creates a panel for displaying the player's guess
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,1));
 		JLabel guessLabel = new JLabel("Guess:");
@@ -69,12 +74,12 @@ public class ControlPanel extends JPanel{
 		return panel;
 	}
 	
-	private JPanel createGuestResultPanel() {
+	private JPanel createGuessResultPanel() {
+		//Creates the panel 
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,1));
 		JLabel responseLabel = new JLabel("Response:");
 		response = new JTextField(20);
-		response.setEditable(false);
 		panel.add(responseLabel);
 		panel.add(response);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
@@ -82,6 +87,7 @@ public class ControlPanel extends JPanel{
 	}
 	
 	private JPanel createNextPlayerButton() {
+		//Creates the button for moving to the next player
 		JButton nextPlayer = new JButton("Next Player");
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,1));
@@ -90,7 +96,8 @@ public class ControlPanel extends JPanel{
 		
 	}
 	
-	public JPanel createMakeAccusationButton() {
+	private JPanel createMakeAccusationButton() {
+		//Creates the button for making an accusation
 		JButton makeAccusation = new JButton("Make an Accusation");
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,1));
