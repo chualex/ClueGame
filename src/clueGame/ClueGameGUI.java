@@ -59,7 +59,7 @@ public class ClueGameGUI extends JFrame{
 	public static void main(String[] args) {
 		ClueGameGUI frame = new ClueGameGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(2000, 1500);	
+		frame.setSize(1000, 2000);	
 		ControlPanel controlPanel = new ControlPanel();
 		frame.add(controlPanel, BorderLayout.SOUTH);
 		MyCardsPanel myCardsPanel = new MyCardsPanel();

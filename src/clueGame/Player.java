@@ -15,7 +15,7 @@ public abstract class Player {
 	private ArrayList<Card> seenCards;
 	boolean isHuman;
 	protected Solution suggestion;
-	
+	public static final int CELL_SIZE = 20;
 
 	
 	public Player(String playerName, int row, int column, Color color, boolean human) {
@@ -90,7 +90,7 @@ public abstract class Player {
 	}
 	public void draw(Graphics g) {
 		g.setColor(color);
-		g.fillOval(column*50, row*50, 50, 50);
-		g.drawOval(column*50, row*50, 50, 50);
+		g.fillOval(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
+		g.drawOval(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
 	}
 }

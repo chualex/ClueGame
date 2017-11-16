@@ -28,7 +28,7 @@ public class BoardCell {
 	// Door direction
 	private DoorDirection doorDirection;
 	// Size of cell
-	public static final int CELL_SIZE = 50;
+	public static final int CELL_SIZE = 20;
 	public BoardCell(int i, int j) {
 		this.row = i;
 		this.column = j;
@@ -95,7 +95,7 @@ public class BoardCell {
 	}
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(3));
+		g2.setStroke(new BasicStroke(1));
 		if (initial == 'W') {
 			g2.setColor(Color.yellow);
 			g2.fillRect(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
@@ -121,7 +121,7 @@ public class BoardCell {
 		}
 		if (isDoorway) {
 			g2.setColor(Color.blue);
-			g2.setStroke(new BasicStroke(6));
+			g2.setStroke(new BasicStroke(3));
 			switch (doorDirection) {
 			case DOWN:
 				g2.drawLine(column*CELL_SIZE, row*CELL_SIZE + CELL_SIZE,  column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE + CELL_SIZE);
@@ -137,7 +137,7 @@ public class BoardCell {
 				break;
 			}
 		}
-		Font f = new Font("Comic Sans MS", Font.BOLD, 30);
+		Font f = new Font("Comic Sans MS", Font.BOLD, 12);
 		g.setFont(f);
 		g.drawString("Kitchen", 2 * CELL_SIZE, 2 * CELL_SIZE);
 		g.drawString("Gallery", 1 * CELL_SIZE, 12 * CELL_SIZE);
