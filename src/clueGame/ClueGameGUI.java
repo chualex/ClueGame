@@ -13,12 +13,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class ClueGameGUI extends JFrame{
-
+	private DetectiveNotesDialog notesDialog;
+	private static Board board;
 	public ClueGameGUI() {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
-
+		// Board is singleton, get the only instance
+		board = Board.getInstance();
+		// set the file names to use my config files
+		board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt", "PlayerFile.txt", "WeaponsFile.txt");
+		board.initialize();
 	}
 	
 	private JMenu createFileMenu() {
@@ -43,24 +48,23 @@ public class ClueGameGUI extends JFrame{
 		JMenuItem item = new JMenuItem("Show Notes");
 		class MenuItemListener implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
-				//TODO: need to add notes 
+				notesDialog = new DetectiveNotesDialog();
+				notesDialog.setVisible(true);
 			}
 		}
 		item.addActionListener(new MenuItemListener());
 		return item;
 	}
 	
-
 	public static void main(String[] args) {
 		ClueGameGUI frame = new ClueGameGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(250, 150);	
+		frame.setSize(2000, 1500);	
 		ControlPanel controlPanel = new ControlPanel();
 		frame.add(controlPanel, BorderLayout.SOUTH);
 		MyCardsPanel myCardsPanel = new MyCardsPanel();
 		frame.add(myCardsPanel, BorderLayout.EAST);
 		frame.setVisible(true);
+		frame.add(board, BorderLayout.CENTER);
 	}
-	
 }

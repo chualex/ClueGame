@@ -1,6 +1,7 @@
 package clueGame;
 import java.io.FileNotFoundException;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+
+import javax.swing.JPanel;
 /**
  * Board Class - Sets up Board and finds adjacencies and targets.
  * 
@@ -19,7 +22,7 @@ import java.util.Set;
  *
  */
 
-public class Board {
+public class Board extends JPanel {
 	// Array to store the game board
 	private BoardCell[][] gameBoard;
 	// Number of rows in game board
@@ -52,6 +55,12 @@ public class Board {
 	private ArrayList<Card> deck;
 	// Solution for the game
 	private Solution solution;
+	// array of rooms
+	private ArrayList<String> rooms;
+	// array of weapons
+	private ArrayList<String> weapons;
+	// Panel for board
+
 
 	public Board() {
 		legend = new HashMap<Character, String>();
@@ -59,6 +68,8 @@ public class Board {
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		deck = new ArrayList<Card>();
+		weapons = new ArrayList<String>();
+		rooms = new ArrayList<String>();
 	}
 
 	/**
@@ -186,6 +197,7 @@ public class Board {
 			if (split[2].equalsIgnoreCase("Card")) {
 				Card room = new Card(split[1], CardType.ROOM);
 				deck.add(room);
+				rooms.add(split[1]);
 			}
 			// puts legend together
 			legend.put(split[0].charAt(0), split[1]);
@@ -315,8 +327,10 @@ public class Board {
 			Scanner scan = new Scanner(iFS);
 			// read in rows
 			while (scan.hasNextLine()) {
-				Card weapon = new Card(scan.nextLine(), CardType.WEAPON);
+				String input = scan.nextLine();
+				Card weapon = new Card(input, CardType.WEAPON);
 				deck.add(weapon);
+				weapons.add(input);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -527,6 +541,29 @@ public class Board {
 		this.solution = a;
 	}
 
+	public ArrayList<String> getRooms() {
+		return rooms;
+	}
+
+	public ArrayList<String> getWeapons() {
+		return weapons;
+	}
+
+	public int getNumPlayers() {
+		return numPlayers;
+	}
+	
+	public void paintComponent(Graphics g) {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				gameBoard[i][j].draw(g);
+			}
+		}
+		for (int i = 0; i < players.length; i++) {
+		players[i].draw(g);	
+		}
+	}
+	
 
 
 }

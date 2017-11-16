@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
@@ -87,5 +88,9 @@ public abstract class Player {
 	public void setSuggestion(Solution solution) {
 		suggestion = solution;
 	}
-
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.fillOval(column*50, row*50, 50, 50);
+		g.drawOval(column*50, row*50, 50, 50);
+	}
 }
