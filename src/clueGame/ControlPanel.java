@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class ControlPanelGUI extends JPanel{
+public class ControlPanel extends JPanel{
 	//instance variables for the text-fields
 	private JTextField turn;
 	private JTextField diceRoll; 
@@ -19,7 +19,7 @@ public class ControlPanelGUI extends JPanel{
 	private JTextField response;
 	
 
-	public ControlPanelGUI() {
+	public ControlPanel() {
 		//Creates layout for control panel
 		setLayout(new GridLayout(2,0));
 		JPanel panel = createWhoseTurnPanel();
@@ -112,9 +112,9 @@ public class ControlPanelGUI extends JPanel{
 				controlFrame.setTitle("CLUE GUI");
 				controlFrame.setSize(250, 150);	
 				// Creates the controlPanel and adds it to the frame 
-				 ControlPanelGUI controlPanel = new ControlPanelGUI();
+				 ControlPanel controlPanel = new ControlPanel();
 				controlFrame.add(controlPanel, BorderLayout.CENTER);
-				// Let's us view the frame 
+				// Lets us view the frame 
 				controlFrame.setVisible(true);
 	}
 }
