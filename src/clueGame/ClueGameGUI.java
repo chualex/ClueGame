@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ClueGameGUI extends JFrame{
@@ -57,12 +58,17 @@ public class ClueGameGUI extends JFrame{
 	}
 	
 	public static void main(String[] args) {
+		String splashMessage = "You are Madame Young Jon, press Next Player to begin to play";
 		ClueGameGUI frame = new ClueGameGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1300, 1000);	
 		ControlPanel controlPanel = new ControlPanel();
 		frame.add(controlPanel, BorderLayout.SOUTH);
 		MyCardsPanel myCardsPanel = new MyCardsPanel();
+		//Creates and displays splash window to start game
+		JOptionPane splash = new JOptionPane();
+		splash.showMessageDialog(frame, splashMessage, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
+		
 		frame.add(myCardsPanel, BorderLayout.EAST);
 		frame.setVisible(true);
 		frame.add(board, BorderLayout.CENTER);
