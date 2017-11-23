@@ -2,6 +2,8 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -90,6 +92,8 @@ public class ControlPanel extends JPanel{
 		//Creates the button for moving to the next player
 		JButton nextPlayer = new JButton("Next Player");
 		JPanel panel = new JPanel();
+		ButtonListener listener = new ButtonListener();  // create a button listener
+		nextPlayer.addActionListener(listener);  // add the listener to the button
 		panel.setLayout(new GridLayout(1,1));
 		panel.add(nextPlayer);
 		return panel;
@@ -100,12 +104,24 @@ public class ControlPanel extends JPanel{
 		//Creates the button for making an accusation
 		JButton makeAccusation = new JButton("Make an Accusation");
 		JPanel panel = new JPanel();
+		ButtonListener listener = new ButtonListener();  // create a button listener
+		makeAccusation.addActionListener(listener);  // add the listener to the button
 		panel.setLayout(new GridLayout(1,1));
 		panel.add(makeAccusation);
 		return panel;
 	}
+	private class ButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			if (e.getSource() == nextPlayer )
+				// do stuff
+			else if (e.getSource() == makeAccusation)
+				// do stuff
+		}
+	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 				// Creates a JFrame
 				JFrame controlFrame = new JFrame();
 				controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,4 +133,5 @@ public class ControlPanel extends JPanel{
 				// Lets us view the frame 
 				controlFrame.setVisible(true);
 	}
+	*/
 }

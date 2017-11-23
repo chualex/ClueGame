@@ -68,7 +68,6 @@ public class ClueGameGUI extends JFrame{
 		//Creates and displays splash window to start game
 		JOptionPane splash = new JOptionPane();
 		splash.showMessageDialog(frame, splashMessage, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
-		
 		frame.add(myCardsPanel, BorderLayout.EAST);
 		frame.setVisible(true);
 		frame.add(board, BorderLayout.CENTER);
