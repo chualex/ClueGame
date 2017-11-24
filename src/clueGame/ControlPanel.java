@@ -19,7 +19,8 @@ public class ControlPanel extends JPanel{
 	private JTextField diceRoll; 
 	private JTextField guess;
 	private JTextField response;
-	
+	JButton nextPlayer;
+	JButton makeAccusation;
 
 	public ControlPanel() {
 		//Creates layout for control panel
@@ -90,7 +91,7 @@ public class ControlPanel extends JPanel{
 	
 	private JPanel createNextPlayerButton() {
 		//Creates the button for moving to the next player
-		JButton nextPlayer = new JButton("Next Player");
+		nextPlayer = new JButton("Next Player");
 		JPanel panel = new JPanel();
 		ButtonListener listener = new ButtonListener();  // create a button listener
 		nextPlayer.addActionListener(listener);  // add the listener to the button
@@ -102,7 +103,7 @@ public class ControlPanel extends JPanel{
 	
 	private JPanel createMakeAccusationButton() {
 		//Creates the button for making an accusation
-		JButton makeAccusation = new JButton("Make an Accusation");
+		makeAccusation = new JButton("Make an Accusation");
 		JPanel panel = new JPanel();
 		ButtonListener listener = new ButtonListener();  // create a button listener
 		makeAccusation.addActionListener(listener);  // add the listener to the button
@@ -112,14 +113,12 @@ public class ControlPanel extends JPanel{
 	}
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			Object makeAccusation;
-			if (e.getSource() == ButtonListener) {
-				
+			if (e.getSource() == nextPlayer) {
+				System.out.println("next Player");
 			}
 			else if (e.getSource() == makeAccusation) {
-				
+				System.out.println("Accusation");
 			}
-				// do stuff
 		}
 	}
 	
