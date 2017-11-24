@@ -110,13 +110,15 @@ public class ControlPanel extends JPanel{
 		panel.add(makeAccusation);
 		return panel;
 	}
-	private class ButtonListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			if (e.getSource() == nextPlayer )
-				// do stuff
-			else if (e.getSource() == makeAccusation)
+	private class ButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Object makeAccusation;
+			if (e.getSource() == ButtonListener) {
+				
+			}
+			else if (e.getSource() == makeAccusation) {
+				
+			}
 				// do stuff
 		}
 	}
