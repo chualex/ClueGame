@@ -117,6 +117,7 @@ public class Board extends JPanel {
 		loadPlayerConfig();
 		loadWeaponConfig();
 		calcAdjacencies();
+		makeSolution();
 		dealCards();
 	}
 
@@ -563,7 +564,28 @@ public class Board extends JPanel {
 		players[i].draw(g);	
 		}
 	}
-	
+	public void makeSolution() {
+		Random rand = new Random();
+		int playerNum = rand.nextInt(players.length);
+		int weaponsNum = rand.nextInt(weapons.size());
+		int roomNum = rand.nextInt(rooms.size());
+		String playerCard = players[playerNum].getPlayerName();
+		String weaponsCard = weapons.get(weaponsNum);
+		String roomCard = rooms.get(roomNum);
+		
+		for (int i = 0; i < deck.size(); i++) {
+			if (deck.get(i).getCardName().equalsIgnoreCase(playerCard)) {
+				deck.remove(i);
+			}
+			if (deck.get(i).getCardName().equalsIgnoreCase(weaponsCard)) {
+				deck.remove(i);
+			}
+			if (deck.get(i).getCardName().equalsIgnoreCase(roomCard)) {
+				deck.remove(i);
+			}
+		}
+		solution = new Solution(playerCard, weaponsCard, roomCard);
+	}
 
 
 }
