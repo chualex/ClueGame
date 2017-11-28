@@ -113,12 +113,8 @@ public class BoardCell {
 			g2.fillRect(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
 			g2.setColor(Color.BLACK);
 			g2.drawRect(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
-
-			
-			
-			
-			
 		}
+		
 		if (isDoorway) {
 			g2.setColor(Color.blue);
 			g2.setStroke(new BasicStroke(3));
@@ -156,8 +152,33 @@ public class BoardCell {
 	
 		g.drawString("Office", 20 * CELL_SIZE, 20 * CELL_SIZE);
 	}
-
-		
+	public void drawTarget(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(1));
+		g2.setColor(Color.cyan);
+		g2.fillRect(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
+		g2.setColor(Color.BLACK);
+		g2.drawRect(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
+		if (isDoorway) {
+			g2.setColor(Color.blue);
+			g2.setStroke(new BasicStroke(3));
+			switch (doorDirection) {
+			case DOWN:
+				g2.drawLine(column*CELL_SIZE, row*CELL_SIZE + CELL_SIZE,  column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE + CELL_SIZE);
+				break;
+			case UP:
+				g2.drawLine(column*CELL_SIZE, row*CELL_SIZE,column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE);
+				break;
+			case RIGHT:
+				g2.drawLine(column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE, column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE + CELL_SIZE);
+				break;
+			case LEFT:
+				g2.drawLine(column*CELL_SIZE, row*CELL_SIZE, column*CELL_SIZE, row*CELL_SIZE + CELL_SIZE);
+				break;
+			}
 	}
+	}
+}
+	
 
 

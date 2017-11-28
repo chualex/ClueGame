@@ -61,7 +61,7 @@ public class ClueGameGUI extends JFrame{
 		String splashMessage = "You are Madame Young Jon, press Next Player to begin to play";
 		ClueGameGUI frame = new ClueGameGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1300, 1000);	
+		frame.setSize(1300, 2000);	
 		ControlPanel controlPanel = new ControlPanel();
 		frame.add(controlPanel, BorderLayout.SOUTH);
 		MyCardsPanel myCardsPanel = new MyCardsPanel();

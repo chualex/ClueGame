@@ -565,6 +565,7 @@ public class Board extends JPanel {
 		}
 	}
 	public void makeSolution() {
+		
 		Random rand = new Random();
 		int playerNum = rand.nextInt(players.length);
 		int weaponsNum = rand.nextInt(weapons.size());
