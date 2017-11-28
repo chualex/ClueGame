@@ -2,6 +2,8 @@ package clueGame;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.BasicStroke;
 import java.awt.geom.Line2D;
 import java.awt.Color;
@@ -176,7 +178,14 @@ public class BoardCell {
 				g2.drawLine(column*CELL_SIZE, row*CELL_SIZE, column*CELL_SIZE, row*CELL_SIZE + CELL_SIZE);
 				break;
 			}
+		}
 	}
+	public boolean containsClick(int mouseX, int mouseY) {
+		Rectangle rect = new Rectangle(column*CELL_SIZE, row*CELL_SIZE, column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE + CELL_SIZE);
+		if (rect.contains(new Point(mouseX, mouseY))) {
+			return true;
+		}
+		return false;
 	}
 }
 	
