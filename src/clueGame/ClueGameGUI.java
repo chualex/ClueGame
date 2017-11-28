@@ -3,6 +3,7 @@ package clueGame;
 
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +17,11 @@ import javax.swing.JPanel;
 public class ClueGameGUI extends JFrame{
 	private DetectiveNotesDialog notesDialog;
 	private static Board board;
+	private int currentTurn;
+	private int humanIndex;
+	public static MyCardsPanel myCardsPanel;
+	public ControlPanel controlPanel;
+	private int numPlayers;
 	public ClueGameGUI() {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -25,6 +31,7 @@ public class ClueGameGUI extends JFrame{
 		// set the file names to use my config files
 		board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt", "PlayerFile.txt", "WeaponsFile.txt");
 		board.initialize();
+		numPlayers = board.getNumPlayers();
 	}
 	
 	private JMenu createFileMenu() {
@@ -57,19 +64,33 @@ public class ClueGameGUI extends JFrame{
 		return item;
 	}
 	
+	public void doOneRound() {
+		Player currentPlayer = board.getPlayer(currentTurn);
+		if (currentPlayer.isHuman) {
+			controlPanel.setTurn(currentPlayer.getPlayerName());
+		}
+	}
 	public static void main(String[] args) {
 		String splashMessage = "You are Madame Young Jon, press Next Player to begin to play";
 		ClueGameGUI frame = new ClueGameGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1300, 2000);	
+		frame.setSize(1000, 700);	
 		ControlPanel controlPanel = new ControlPanel();
 		frame.add(controlPanel, BorderLayout.SOUTH);
-		MyCardsPanel myCardsPanel = new MyCardsPanel();
+		myCardsPanel = new MyCardsPanel();
 		//Creates and displays splash window to start game
 		JOptionPane splash = new JOptionPane();
 		splash.showMessageDialog(frame, splashMessage, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 		frame.add(myCardsPanel, BorderLayout.EAST);
 		frame.setVisible(true);
 		frame.add(board, BorderLayout.CENTER);
+		
+		while (true) {
+			
+			
+			
+			
+		}
+		
 	}
 }

@@ -111,6 +111,15 @@ public class ControlPanel extends JPanel{
 		panel.add(makeAccusation);
 		return panel;
 	}
+	
+	public void setTurn(String name) {
+		turn.setText(name);
+	}
+	
+	public void setDice(String roll) {
+		diceRoll.setText(roll);
+	}
+	
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == nextPlayer) {

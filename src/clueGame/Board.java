@@ -565,28 +565,41 @@ public class Board extends JPanel {
 		}
 	}
 	public void makeSolution() {
-		
+		// gets random number to find solution cards
 		Random rand = new Random();
 		int playerNum = rand.nextInt(players.length);
 		int weaponsNum = rand.nextInt(weapons.size());
 		int roomNum = rand.nextInt(rooms.size());
+		
+		// finds random cards for solution
 		String playerCard = players[playerNum].getPlayerName();
 		String weaponsCard = weapons.get(weaponsNum);
 		String roomCard = rooms.get(roomNum);
 		
+		// Index of solution cards
+		int playerIndex = 0;
+		int weaponIndex = 0;
+		int roomIndex = 0;
+		
+		// Finds solution cards in deck and removes them
 		for (int i = 0; i < deck.size(); i++) {
 			if (deck.get(i).getCardName().equalsIgnoreCase(playerCard)) {
-				deck.remove(i);
+				deck.remove(i);	
 			}
-			if (deck.get(i).getCardName().equalsIgnoreCase(weaponsCard)) {
-				deck.remove(i);
+			else if (deck.get(i).getCardName().equalsIgnoreCase(weaponsCard)) {
+				deck.remove(i);	
 			}
-			if (deck.get(i).getCardName().equalsIgnoreCase(roomCard)) {
-				deck.remove(i);
-			}
+			else if (deck.get(i).getCardName().equalsIgnoreCase(roomCard)) {
+				deck.remove(i);			}
 		}
+	
+		// creates solution
 		solution = new Solution(playerCard, weaponsCard, roomCard);
 	}
 
+	public Player getPlayer(int currentTurn) {
+		return players[currentTurn];
+	}
+	
 
 }

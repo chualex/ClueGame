@@ -41,7 +41,6 @@ public class MyCardsPanel extends JPanel{
 		panel.setLayout(new GridLayout(1,1));
 		JLabel label = new JLabel("Weapons:");
 		weapons = new JTextField(20);
-		int i = 0;
 		for (Card card: board.getPlayers()[0].getMyCards()) {
 			if (card.getCardType() == CardType.WEAPON) {
 				text += card.getCardName() + "---";
@@ -94,7 +93,7 @@ public class MyCardsPanel extends JPanel{
 		return panel;
 	}
 	
-	public static void main(String[] args) {
+ 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(250, 150);	
@@ -102,4 +101,5 @@ public class MyCardsPanel extends JPanel{
 		frame.add(panel,  BorderLayout.CENTER);
 		frame.setVisible(true);
 	}
+	
 }
