@@ -180,6 +180,7 @@ public class BoardCell {
 			}
 		}
 	}
+	
 	public boolean containsClick(int mouseX, int mouseY) {
 		Rectangle rect = new Rectangle(column*CELL_SIZE, row*CELL_SIZE, column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE + CELL_SIZE);
 		if (rect.contains(new Point(mouseX, mouseY))) {
