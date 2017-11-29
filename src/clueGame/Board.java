@@ -52,7 +52,9 @@ public class Board extends JPanel {
 	// Number of players
 	private int numPlayers;
 	// Index of current player
-	private int currentPlayer;
+	private int currentPlayerIndex;
+	// current player 
+	Player currentPlayer;
 	// Array for deck
 	private ArrayList<Card> deck;
 	// Solution for the game
@@ -61,7 +63,8 @@ public class Board extends JPanel {
 	private ArrayList<String> rooms;
 	// array of weapons
 	private ArrayList<String> weapons;
-	// Panel for board
+	// number for die 
+	private int die;
 
 
 	public Board() {
@@ -72,7 +75,7 @@ public class Board extends JPanel {
 		deck = new ArrayList<Card>();
 		weapons = new ArrayList<String>();
 		rooms = new ArrayList<String>();
-		currentPlayer = 0;
+		currentPlayerIndex = 0;
 	}
 
 	/**
@@ -563,6 +566,9 @@ public class Board extends JPanel {
 				gameBoard[i][j].draw(g);
 			}
 		}
+		for (BoardCell cell: targets) {
+			cell.drawTarget(g);
+		}
 		for (int i = 0; i < players.length; i++) {
 		players[i].draw(g);	
 		}
@@ -600,13 +606,21 @@ public class Board extends JPanel {
 		solution = new Solution(playerCard, weaponsCard, roomCard);
 	}
 
-	public void nextPlayer() {
-		if (players[currentPlayer].isHuman) {
+	public void nextPlayer(int dieRoll) {
+		die = dieRoll;
+		currentPlayer = players[currentPlayerIndex];
+		if (currentPlayer.isHuman) {
 			humanStep();
 		}
+		else {
+			
+		}
+		currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
 	}
 	
 	public void humanStep() {
+		calcTargets(currentPlayer.getRow(), currentPlayer.getColumn(), die);
+		repaint();
 		
 	}
 	

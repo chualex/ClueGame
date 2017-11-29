@@ -33,14 +33,14 @@ public class ClueGameGUI extends JFrame{
 		board.initialize();
 		numPlayers = board.getNumPlayers();
 	}
-	
+
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.add(createFileExitItem());
 		menu.add(createFileShowNotesItem());
 		return menu;
 	}
-	
+
 	private JMenuItem createFileExitItem() {
 		JMenuItem item = new JMenuItem("Exit");
 		class MenuItemListener implements ActionListener{
@@ -51,7 +51,7 @@ public class ClueGameGUI extends JFrame{
 		item.addActionListener(new MenuItemListener());
 		return item;
 	}
-	
+
 	private JMenuItem createFileShowNotesItem() {
 		JMenuItem item = new JMenuItem("Show Notes");
 		class MenuItemListener implements ActionListener{
@@ -63,13 +63,7 @@ public class ClueGameGUI extends JFrame{
 		item.addActionListener(new MenuItemListener());
 		return item;
 	}
-	
-	public void doOneRound() {
-		Player currentPlayer = board.getPlayer(currentTurn);
-		if (currentPlayer.isHuman) {
-			controlPanel.setTurn(currentPlayer.getPlayerName());
-		}
-	}
+
 	public static void main(String[] args) {
 		String splashMessage = "You are Madame Young Jon, press Next Player to begin to play";
 		ClueGameGUI frame = new ClueGameGUI();
@@ -84,5 +78,6 @@ public class ClueGameGUI extends JFrame{
 		frame.add(myCardsPanel, BorderLayout.EAST);
 		frame.setVisible(true);
 		frame.add(board, BorderLayout.CENTER);
+
 	}
 }

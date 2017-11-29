@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +23,9 @@ public class ControlPanel extends JPanel{
 	private JButton nextPlayer;
 	private JButton makeAccusation;
 	private Board board;
+	private Player[] players;
+	private int currentPlayer;
+	private int die;
 	public ControlPanel() {
 		//Creates layout for control panel
 		setLayout(new GridLayout(2,0));
@@ -39,6 +43,8 @@ public class ControlPanel extends JPanel{
 		add(panel);
 		// gets instance of board
 		board = Board.getInstance();
+		players = board.getPlayers();
+		currentPlayer = 0;
 	}
 	private JPanel createWhoseTurnPanel() {
 		//Creates the panel for displaying which player has the turn
@@ -112,19 +118,21 @@ public class ControlPanel extends JPanel{
 		panel.add(makeAccusation);
 		return panel;
 	}
-	
-	public void setTurn(String name) {
-		turn.setText(name);
+	public void rollDie() {
+		Random rand = new Random();
+		die = rand.nextInt(6) + 1;
 	}
-	
-	public void setDice(String roll) {
-		diceRoll.setText(roll);
-	}
+
 	
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == nextPlayer) {
-				board.nextPlayer();
+				// display player name
+				turn.setText(players[currentPlayer].getPlayerName());
+				rollDie();
+				diceRoll.setText(String.valueOf(die));
+				board.nextPlayer(die);
+				currentPlayer = (currentPlayer + 1) % players.length;
 			}
 			else if (e.getSource() == makeAccusation) {
 				System.out.println("Accusation");
