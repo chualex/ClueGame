@@ -623,7 +623,7 @@ public class Board extends JPanel implements MouseListener {
 			humanStep();
 		}
 		else {
-			
+			computerStep();
 		}
 	}
 	
@@ -632,6 +632,13 @@ public class Board extends JPanel implements MouseListener {
 		repaint();
 		mouseInput = true;
 		
+	}
+	public void computerStep() {
+		calcTargets(currentPlayer.getRow(), currentPlayer.getColumn(), die);
+		BoardCell newLocation = players[currentPlayerIndex].pickLocation(targets);
+		players[currentPlayerIndex].setLocation(newLocation.getRow(), newLocation.getColumn());
+		targets.clear();
+		repaint();
 	}
 	public void setCurrentPlayer(int input) {
 		currentPlayerIndex = input;
