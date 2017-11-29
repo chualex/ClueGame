@@ -44,7 +44,7 @@ public class ControlPanel extends JPanel{
 		// gets instance of board
 		board = Board.getInstance();
 		players = board.getPlayers();
-		currentPlayer = 0;
+		currentPlayer = 5;
 	}
 	private JPanel createWhoseTurnPanel() {
 		//Creates the panel for displaying which player has the turn
@@ -127,12 +127,14 @@ public class ControlPanel extends JPanel{
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == nextPlayer) {
+				// increment to next player
+				currentPlayer = (currentPlayer + 1) % players.length;
 				// display player name
 				turn.setText(players[currentPlayer].getPlayerName());
 				rollDie();
 				diceRoll.setText(String.valueOf(die));
+				board.setCurrentPlayer(currentPlayer);
 				board.nextPlayer(die);
-				currentPlayer = (currentPlayer + 1) % players.length;
 			}
 			else if (e.getSource() == makeAccusation) {
 				System.out.println("Accusation");

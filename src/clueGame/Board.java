@@ -2,9 +2,12 @@ package clueGame;
 import java.io.FileNotFoundException;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.lang.reflect.Field;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,6 +15,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 /**
  * Board Class - Sets up Board and finds adjacencies and targets.
@@ -22,7 +26,7 @@ import javax.swing.JPanel;
  *
  */
 
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener {
 	// Array to store the game board
 	private BoardCell[][] gameBoard;
 	// Number of rows in game board
@@ -65,6 +69,8 @@ public class Board extends JPanel {
 	private ArrayList<String> weapons;
 	// number for die 
 	private int die;
+	// boolean for mouse listener
+	private boolean mouseInput;
 
 
 	public Board() {
@@ -76,6 +82,8 @@ public class Board extends JPanel {
 		weapons = new ArrayList<String>();
 		rooms = new ArrayList<String>();
 		currentPlayerIndex = 0;
+		mouseInput = false;
+		addMouseListener(this);
 	}
 
 	/**
@@ -573,6 +581,7 @@ public class Board extends JPanel {
 		players[i].draw(g);	
 		}
 	}
+	
 	public void makeSolution() {
 		// gets random number to find solution cards
 		Random rand = new Random();
@@ -599,7 +608,8 @@ public class Board extends JPanel {
 				deck.remove(i);	
 			}
 			else if (deck.get(i).getCardName().equalsIgnoreCase(roomCard)) {
-				deck.remove(i);			}
+				deck.remove(i);			
+				}
 		}
 	
 		// creates solution
@@ -615,14 +625,54 @@ public class Board extends JPanel {
 		else {
 			
 		}
-		currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
 	}
 	
 	public void humanStep() {
 		calcTargets(currentPlayer.getRow(), currentPlayer.getColumn(), die);
 		repaint();
+		mouseInput = true;
 		
 	}
+	public void setCurrentPlayer(int input) {
+		currentPlayerIndex = input;
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) { 
+		// waits for the input from user
+		boolean displayError = true;
+		if (mouseInput) {
+			for (BoardCell cell: targets) {
+				// checks if the click is inside the targets
+				if (cell.containsClick(e.getX(), e.getY())) {
+					// moves player
+					players[currentPlayerIndex].setLocation(cell.getRow(), cell.getColumn());
+					targets.clear();
+					repaint();
+					mouseInput = false;
+					displayError = false;
+					break;
+				}
+			}
+			// display error
+			if (displayError) {
+				JOptionPane splash = new JOptionPane();
+				splash.showMessageDialog(null, "This is not a valid move" , "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) { }
+
+	@Override
+	public void mouseEntered(MouseEvent e) { }
+
+	@Override
+	public void mouseExited(MouseEvent e) { }
 	
 
 }

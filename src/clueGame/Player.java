@@ -93,4 +93,9 @@ public abstract class Player {
 		g.fillOval(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
 		g.drawOval(column*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE);
 	}
+
+	public void setLocation(int inputRow, int inputColumn) {
+		row = inputRow;
+		column = inputColumn;
+	}
 }
