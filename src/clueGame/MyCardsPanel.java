@@ -15,25 +15,23 @@ public class MyCardsPanel extends JPanel{
 	private JTextField people;
 	private JTextField weapons;
 	private JTextField rooms;
-	
+
 	private static Board board;
-	
+
 	public MyCardsPanel() {
+		// Gets instance of board 
 		board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("ClueGameBoard.csv", "ClueLegend.txt", "PlayerFile.txt", "WeaponsFile.txt");
-		board.initialize();
-	//Creates layout for the board panel
-	setLayout(new GridLayout(3,0));
-	JPanel panel = createPeoplePanel();
-	add(panel);
-	panel = createWeaponsPanel();
-	add(panel);
-	panel = createRoomsPanel();
-	add(panel);
-	setBorder(new TitledBorder (new EtchedBorder(), "My Cards"));
+		//Creates layout for the board panel
+		setLayout(new GridLayout(3,0));
+		JPanel panel = createPeoplePanel();
+		add(panel);
+		panel = createWeaponsPanel();
+		add(panel);
+		panel = createRoomsPanel();
+		add(panel);
+		setBorder(new TitledBorder (new EtchedBorder(), "My Cards"));
 	}
-	
+
 	private JPanel createWeaponsPanel() {
 		boolean mult = false;
 		String text  = "";
@@ -45,7 +43,7 @@ public class MyCardsPanel extends JPanel{
 			if (card.getCardType() == CardType.WEAPON) {
 				text += card.getCardName() + "---";
 			}
-			
+
 		}
 		weapons.setText(text);
 		weapons.setEditable(false);
@@ -53,7 +51,7 @@ public class MyCardsPanel extends JPanel{
 		panel.add(weapons);
 		return panel;
 	}
-	
+
 	private JPanel createPeoplePanel() {
 		String text  = "";
 		JPanel panel = new JPanel();
@@ -64,7 +62,7 @@ public class MyCardsPanel extends JPanel{
 			if (card.getCardType() == CardType.PERSON) {
 				text += card.getCardName() + "---";
 			}
-			
+
 		}
 		people.setText(text);
 		people.setEditable(false);
@@ -72,8 +70,8 @@ public class MyCardsPanel extends JPanel{
 		panel.add(people);
 		return panel;
 	}
-	
-	
+
+
 	private JPanel createRoomsPanel() {
 		String text = "";
 		JPanel panel = new JPanel();
@@ -84,7 +82,7 @@ public class MyCardsPanel extends JPanel{
 			if (card.getCardType() == CardType.ROOM) {
 				text += card.getCardName() + "---";
 			}
-			
+
 		}
 		rooms.setText(text);
 		rooms.setEditable(false);
@@ -92,8 +90,8 @@ public class MyCardsPanel extends JPanel{
 		panel.add(rooms);
 		return panel;
 	}
-	
- 	public static void main(String[] args) {
+
+	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(250, 150);	
@@ -101,5 +99,5 @@ public class MyCardsPanel extends JPanel{
 		frame.add(panel,  BorderLayout.CENTER);
 		frame.setVisible(true);
 	}
-	
+
 }

@@ -51,6 +51,8 @@ public class Board extends JPanel {
 	private Player players[];
 	// Number of players
 	private int numPlayers;
+	// Index of current player
+	private int currentPlayer;
 	// Array for deck
 	private ArrayList<Card> deck;
 	// Solution for the game
@@ -70,6 +72,7 @@ public class Board extends JPanel {
 		deck = new ArrayList<Card>();
 		weapons = new ArrayList<String>();
 		rooms = new ArrayList<String>();
+		currentPlayer = 0;
 	}
 
 	/**
@@ -597,8 +600,14 @@ public class Board extends JPanel {
 		solution = new Solution(playerCard, weaponsCard, roomCard);
 	}
 
-	public Player getPlayer(int currentTurn) {
-		return players[currentTurn];
+	public void nextPlayer() {
+		if (players[currentPlayer].isHuman) {
+			humanStep();
+		}
+	}
+	
+	public void humanStep() {
+		
 	}
 	
 
