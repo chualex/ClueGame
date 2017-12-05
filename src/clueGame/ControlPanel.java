@@ -142,7 +142,7 @@ public class ControlPanel extends JPanel{
 		}
 	}
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 				// Creates a JFrame
 				JFrame controlFrame = new JFrame();
 				controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -154,5 +154,5 @@ public class ControlPanel extends JPanel{
 				// Lets us view the frame 
 				controlFrame.setVisible(true);
 	}
-	*/
+	
 }

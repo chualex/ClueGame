@@ -621,6 +621,7 @@ public class Board extends JPanel implements MouseListener {
 		currentPlayer = players[currentPlayerIndex];
 		if (currentPlayer.isHuman) {
 			humanStep();
+			
 		}
 		else {
 			computerStep();
@@ -661,6 +662,16 @@ public class Board extends JPanel implements MouseListener {
 					repaint();
 					mouseInput = false;
 					displayError = false;
+					if (gameBoard[currentPlayer.getRow()][currentPlayer.getColumn()].isDoorway()) {
+						// show suggestion window
+						
+						//get values from suggestion window
+						
+						// handle suggestion
+						
+						// return disproving card
+						
+					}
 					break;
 				}
 			}

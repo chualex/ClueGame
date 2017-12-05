@@ -19,7 +19,7 @@ public class DetectiveNotesDialog extends JDialog{
 		setTitle("Detective Notes");
 		setSize(1000, 1000);
 		setLayout(new GridLayout(3, 2));
-		board = board.getInstance();
+		board = Board.getInstance();
 		peopleBox = new JComboBox<String>();
 		weaponsBox = new JComboBox<String>();
 		roomsBox = new JComboBox<String>();
@@ -42,7 +42,7 @@ public class DetectiveNotesDialog extends JDialog{
 	}
 	public void CreateComboBox() {
 		ArrayList<String> rooms = board.getRooms();
-		ArrayList<String> weapons = board.getRooms();
+		ArrayList<String> weapons = board.getWeapons();
 		Player[] players = board.getPlayers();
 		int num = board.getNumPlayers();
 		for (int i = 0; i < rooms.size(); i++) {
