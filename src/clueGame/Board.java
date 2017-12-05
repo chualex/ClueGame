@@ -64,14 +64,16 @@ public class Board extends JPanel implements MouseListener {
 	// Solution for the game
 	private Solution solution;
 	// array of rooms
-	private ArrayList<String> rooms;
+	private Set<Card> rooms;
 	// array of weapons
-	private ArrayList<String> weapons;
+	private Set<Card> weapons;
 	// number for die 
 	private int die;
 	// boolean for mouse listener
 	private boolean mouseInput;
-
+	// Players list
+	private Set<Card> playerList;
+	private boolean hasMoved;
 
 	public Board() {
 		legend = new HashMap<Character, String>();
@@ -79,10 +81,12 @@ public class Board extends JPanel implements MouseListener {
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		deck = new ArrayList<Card>();
-		weapons = new ArrayList<String>();
-		rooms = new ArrayList<String>();
+		weapons = new HashSet<Card>();
+		rooms = new HashSet<Card>();
+		playerList = new HashSet<Card>();
 		currentPlayerIndex = 0;
 		mouseInput = false;
+		hasMoved = false;
 		addMouseListener(this);
 	}
 
@@ -131,6 +135,7 @@ public class Board extends JPanel implements MouseListener {
 		loadPlayerConfig();
 		loadWeaponConfig();
 		calcAdjacencies();
+		ComputerPlayer.setUnseenCards(deck, weapons, playerList);
 		makeSolution();
 		dealCards();
 	}
@@ -175,7 +180,6 @@ public class Board extends JPanel implements MouseListener {
 	 * @return The instance of the game board
 	 */
 	public static Board getInstance() {
-		// TODO Auto-generated method stub
 		return theInstance;
 	}
 
@@ -212,7 +216,7 @@ public class Board extends JPanel implements MouseListener {
 			if (split[2].equalsIgnoreCase("Card")) {
 				Card room = new Card(split[1], CardType.ROOM);
 				deck.add(room);
-				rooms.add(split[1]);
+				rooms.add(room);
 			}
 			// puts legend together
 			legend.put(split[0].charAt(0), split[1]);
@@ -291,6 +295,10 @@ public class Board extends JPanel implements MouseListener {
 
 
 	}
+	
+	public boolean isMouseInput() {
+		return mouseInput;
+	}
 	/**
 	 * 
 	 */
@@ -332,6 +340,7 @@ public class Board extends JPanel implements MouseListener {
 			}
 			Card player = new Card(split[0], CardType.PERSON);
 			deck.add(player);
+			playerList.add(player);
 		}
 	}
 	
@@ -345,7 +354,7 @@ public class Board extends JPanel implements MouseListener {
 				String input = scan.nextLine();
 				Card weapon = new Card(input, CardType.WEAPON);
 				deck.add(weapon);
-				weapons.add(input);
+				weapons.add(weapon);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -556,11 +565,11 @@ public class Board extends JPanel implements MouseListener {
 		this.solution = a;
 	}
 
-	public ArrayList<String> getRooms() {
+	public Set<Card> getRooms() {
 		return rooms;
 	}
 
-	public ArrayList<String> getWeapons() {
+	public Set<Card> getWeapons() {
 		return weapons;
 	}
 
@@ -591,8 +600,23 @@ public class Board extends JPanel implements MouseListener {
 		
 		// finds random cards for solution
 		String playerCard = players[playerNum].getPlayerName();
-		String weaponsCard = weapons.get(weaponsNum);
-		String roomCard = rooms.get(roomNum);
+		int count = 0;
+		String weaponsCard = new String();
+		for (Card card: weapons) {
+			if (count == weaponsNum) {
+				weaponsCard = card.getCardName();
+			}
+			count++;
+		}
+		
+		String roomCard = new String();
+		count = 0;
+		for (Card card: rooms) {
+			if (count == roomNum) {
+				roomCard = card.getCardName();
+			}
+			count++;
+		}
 		
 		// Index of solution cards
 		int playerIndex = 0;
@@ -629,17 +653,63 @@ public class Board extends JPanel implements MouseListener {
 	}
 	
 	public void humanStep() {
+		hasMoved = false;
 		calcTargets(currentPlayer.getRow(), currentPlayer.getColumn(), die);
 		repaint();
 		mouseInput = true;
 		
 	}
+	
 	public void computerStep() {
+		Solution guess = ((ComputerPlayer) currentPlayer).makeAccusation();
+		if (guess != null) {
+			if(solution.compareTo(guess)) {
+				JOptionPane splash = new JOptionPane();
+				splash.showMessageDialog(null, "The solution is: " + solution.getPerson() + " with the " +  solution.getWeapon() + " in the " + solution.getRoom(), currentPlayer.getPlayerName() + " Won!", JOptionPane.INFORMATION_MESSAGE);
+				System.exit(0);
+			}
+		}
 		calcTargets(currentPlayer.getRow(), currentPlayer.getColumn(), die);
 		BoardCell newLocation = players[currentPlayerIndex].pickLocation(targets);
 		players[currentPlayerIndex].setLocation(newLocation.getRow(), newLocation.getColumn());
 		targets.clear();
+		if (gameBoard[currentPlayer.getRow()][currentPlayer.getColumn()].isDoorway()) {
+			String room = legend.get(gameBoard[currentPlayer.getRow()][currentPlayer.getColumn()].getInitial());
+			Solution suggestion = ((ComputerPlayer) currentPlayer).createSuggestion(room);
+			ControlPanel.setGuess(suggestion);
+			Card card = handleSuggestion(suggestion);
+			if (card != null) {
+				ControlPanel.setResponse(card.getCardName());
+				makeCardSeen(card);
+			}
+			else {
+				ControlPanel.setResponse("No card returned");
+			}
+			
+		}
 		repaint();
+	}
+	
+	public static void makeCardSeen(Card seenCard) {
+		switch(seenCard.getCardType()) {
+		case WEAPON:
+			ComputerPlayer.removeUnseenWeapon(seenCard);
+			ComputerPlayer.removeUnseenCard(seenCard);
+			break;
+		case PERSON:
+			ComputerPlayer.removeUnseenPerson(seenCard);
+			ComputerPlayer.removeUnseenCard(seenCard);
+			break;
+		case ROOM:
+			ComputerPlayer.removeUnseenCard(seenCard);
+			break;
+		}
+	}
+	public boolean hasMoved() {
+		return hasMoved;
+	}
+	public Solution getSolution() {
+		return solution;
 	}
 	public void setCurrentPlayer(int input) {
 		currentPlayerIndex = input;
@@ -662,26 +732,24 @@ public class Board extends JPanel implements MouseListener {
 					repaint();
 					mouseInput = false;
 					displayError = false;
+					hasMoved = true;
 					if (gameBoard[currentPlayer.getRow()][currentPlayer.getColumn()].isDoorway()) {
+						String room = legend.get(gameBoard[currentPlayer.getRow()][currentPlayer.getColumn()].getInitial());
 						// show suggestion window
-						
-						//get values from suggestion window
-						
-						// handle suggestion
-						
-						// return disproving card
-						
+						SuggestionWindow suggestionWindow = new SuggestionWindow(room);
 					}
-					break;
+				break;
 				}
 			}
-			// display error
-			if (displayError) {
-				JOptionPane splash = new JOptionPane();
-				splash.showMessageDialog(null, "This is not a valid move" , "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
-			}
+				
+		}
+		// display error
+		if (displayError) {
+			JOptionPane splash = new JOptionPane();
+			splash.showMessageDialog(null, "This is not a valid move" , "Error", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+	
 
 	@Override
 	public void mouseReleased(MouseEvent e) { }

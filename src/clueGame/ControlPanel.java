@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -18,14 +19,15 @@ public class ControlPanel extends JPanel{
 	//instance variables for the text-fields
 	private JTextField turn;
 	private JTextField diceRoll; 
-	private JTextField guess;
-	private JTextField response;
+	private static JTextField guess;
+	private static JTextField response;
 	private JButton nextPlayer;
 	private JButton makeAccusation;
 	private Board board;
 	private Player[] players;
 	private int currentPlayer;
 	private int die;
+	private static ControlPanel theInstance = new ControlPanel();
 	public ControlPanel() {
 		//Creates layout for control panel
 		setLayout(new GridLayout(2,0));
@@ -46,6 +48,11 @@ public class ControlPanel extends JPanel{
 		players = board.getPlayers();
 		currentPlayer = 5;
 	}
+	
+	public static ControlPanel getInstance() {
+		return theInstance;
+	}
+	
 	private JPanel createWhoseTurnPanel() {
 		//Creates the panel for displaying which player has the turn
 		JPanel panel = new JPanel();
@@ -64,7 +71,7 @@ public class ControlPanel extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,1));
 		JLabel rollLabel = new JLabel("Roll:");
-		diceRoll = new JTextField(20);
+		diceRoll = new JTextField(1);
 		diceRoll.setEditable(false);
 		panel.add(rollLabel);
 		panel.add(diceRoll);
@@ -77,7 +84,7 @@ public class ControlPanel extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,1));
 		JLabel guessLabel = new JLabel("Guess:");
-		guess = new JTextField(20);
+		guess = new JTextField(100);
 		panel.add(guessLabel);
 		panel.add(guess);
 		panel.setBorder(new TitledBorder (new EtchedBorder(), "Player thinks..."));
@@ -127,19 +134,45 @@ public class ControlPanel extends JPanel{
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == nextPlayer) {
-				// increment to next player
-				currentPlayer = (currentPlayer + 1) % players.length;
-				// display player name
-				turn.setText(players[currentPlayer].getPlayerName());
-				rollDie();
-				diceRoll.setText(String.valueOf(die));
-				board.setCurrentPlayer(currentPlayer);
-				board.nextPlayer(die);
+				if (board.isMouseInput()) {
+					JOptionPane splash = new JOptionPane();
+					splash.showMessageDialog(null, "You must move first" , "Error", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					// increment to next player
+					currentPlayer = (currentPlayer + 1) % players.length;
+					// display player name
+					turn.setText(players[currentPlayer].getPlayerName());
+					rollDie();
+					diceRoll.setText(String.valueOf(die));
+					board.setCurrentPlayer(currentPlayer);
+					board.nextPlayer(die);
+				}
+				
 			}
 			else if (e.getSource() == makeAccusation) {
-				System.out.println("Accusation");
+				if (players[currentPlayer].isHuman()) {
+					if (board.hasMoved() == false) {
+						AccusationWindow accusationWindow = new AccusationWindow();
+					}
+					else {
+						JOptionPane splash = new JOptionPane();
+						splash.showMessageDialog(null, "It's not your turn!" , "Error", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+				else {
+					JOptionPane splash = new JOptionPane();
+					splash.showMessageDialog(null, "It's not your turn!" , "Error", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		}
+	}
+	public static void setGuess(Solution suggestion) {
+		guess.setText(suggestion.getPerson() + " -- " + suggestion.getRoom() + " -- " + suggestion.getWeapon());
+	}
+	
+	public static void setResponse(String input) {
+		response.setText(input);
 	}
 	
 	public static void main(String[] args) {

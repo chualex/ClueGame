@@ -1,5 +1,6 @@
 package clueGame;
 
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,33 +14,32 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+public class AccusationWindow extends JDialog{
 
-public class SuggestionWindow extends JDialog{
-	private Solution suggestion;
-	private JTextField roomTextField;
+	private Solution solution;
 	private JLabel room;
 	private JLabel person;
 	private JLabel weapon;
 	private JButton submit;
 	private JButton cancel;
 	private Board board;
-	private JComboBox<String> peopleBox, weaponsBox;
-	private String currentRoom;
+	private JComboBox<String> peopleBox, weaponsBox, roomsBox;
 	// Control panel
 	ControlPanel controlPanel;
-	public SuggestionWindow(String room) {
-		currentRoom = room;
-		setTitle("Suggestion");
+	public AccusationWindow() {
+		setTitle("Accusation");
 		setSize(700, 700);
 		setLayout(new GridLayout(2, 2));
 		board = Board.getInstance();
 		peopleBox = new JComboBox<String>();
 		weaponsBox = new JComboBox<String>();
+		roomsBox = new JComboBox<String>();
 		JPanel panel = CreateLabelPanel();
 		add(panel);
 		panel = CreateComboBoxPanel();
@@ -53,7 +53,7 @@ public class SuggestionWindow extends JDialog{
 	private JPanel CreateLabelPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3,1));
-		room = new JLabel("Current Room ");
+		room = new JLabel("Room ");
 		panel.add(room);
 		person = new JLabel("Person ");
 		panel.add(person);
@@ -61,14 +61,15 @@ public class SuggestionWindow extends JDialog{
 		panel.add(weapon);
 		return panel;
 	}
-	
+
 	public JPanel CreateComboBoxPanel() {
 		JPanel inputPanel = new JPanel();
 		inputPanel.setLayout(new GridLayout(3,1));
-		roomTextField = new JTextField(20);
-		roomTextField.setEditable(false);
-		roomTextField.setText(currentRoom);
-		inputPanel.add(roomTextField);
+		Set<Card> rooms = board.getRooms();
+		for (Card card: rooms) {
+			roomsBox.addItem(card.getCardName());
+		}
+		inputPanel.add(roomsBox);
 		Set<Card> weapons = board.getWeapons();
 		Player[] players = board.getPlayers();
 		int num = board.getNumPlayers();
@@ -102,26 +103,26 @@ public class SuggestionWindow extends JDialog{
 		panel.add(cancel);
 		return panel;
 	}
-	
+
 	public Solution getSuggestion() {
-		return suggestion;
+		return solution;
 	}
-	
+
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == submit) {
 				String suggestedPerson = String.valueOf(peopleBox.getSelectedItem());
 				String suggestedWeapon = String.valueOf(weaponsBox.getSelectedItem());
-				suggestion = new Solution(suggestedPerson, suggestedWeapon, currentRoom);
-				Card card = board.handleSuggestion(suggestion);
-				controlPanel = ControlPanel.getInstance();
-				ControlPanel.setGuess(suggestion);
-				if (card != null) {
-					ControlPanel.setResponse(card.getCardName());
-					Board.makeCardSeen(card);
+				String suggestedRoom = String.valueOf(roomsBox.getSelectedItem());
+				solution = new Solution(suggestedPerson, suggestedWeapon, suggestedRoom);
+				if (board.getSolution().compareTo(solution)) {
+					JOptionPane splash = new JOptionPane();
+					splash.showMessageDialog(null, "You won!" , "Congrats!", JOptionPane.INFORMATION_MESSAGE);
+					System.exit(0);
 				}
 				else {
-					ControlPanel.setResponse("No card returned");
+					JOptionPane splash = new JOptionPane();
+					splash.showMessageDialog(null, "This guess was incorrect!" , "Sorry!", JOptionPane.INFORMATION_MESSAGE);
 				}
 				setVisible(false);
 			}
@@ -130,15 +131,17 @@ public class SuggestionWindow extends JDialog{
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		// Creates a JFrame
 		JFrame controlFrame = new JFrame();
 		controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		controlFrame.setTitle("CLUE GUI");
 		controlFrame.setSize(250, 150);	
-		SuggestionWindow a = new SuggestionWindow("Dining Room");
-		
-		
+		AccusationWindow a = new AccusationWindow();
+
+
+	}
 }
-}
+
+

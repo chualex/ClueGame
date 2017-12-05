@@ -11,8 +11,8 @@ public abstract class Player {
 	protected int row;
 	protected int column;
 	private Color color;
-	private ArrayList<Card> myCards;
-	private ArrayList<Card> seenCards;
+	protected ArrayList<Card> myCards;
+	protected ArrayList<Card> seenCards;
 	boolean isHuman;
 	protected Solution suggestion;
 	public static final int CELL_SIZE = 20;

@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -41,18 +42,18 @@ public class DetectiveNotesDialog extends JDialog{
 		peoplePanel.setBorder(new TitledBorder (new EtchedBorder(), "People:"));
 	}
 	public void CreateComboBox() {
-		ArrayList<String> rooms = board.getRooms();
-		ArrayList<String> weapons = board.getWeapons();
+		Set<Card> rooms = board.getRooms();
+		Set<Card> weapons = board.getWeapons();
 		Player[] players = board.getPlayers();
 		int num = board.getNumPlayers();
-		for (int i = 0; i < rooms.size(); i++) {
-			roomsBox.addItem(rooms.get(i));
-			JCheckBox checkBox = new JCheckBox(rooms.get(i));
+		for (Card card: rooms) {
+			roomsBox.addItem(card.getCardName());
+			JCheckBox checkBox = new JCheckBox(card.getCardName());
 			roomsPanel.add(checkBox);
 		}
-		for (int i = 0; i < weapons.size(); i++) {
-			weaponsBox.addItem(weapons.get(i));
-			JCheckBox checkBox = new JCheckBox(weapons.get(i));
+		for (Card card: weapons) {
+			weaponsBox.addItem(card.getCardName());
+			JCheckBox checkBox = new JCheckBox(card.getCardName());
 			weaponsPanel.add(checkBox);
 		}
 		for (int i = 0; i < num; i++) {
